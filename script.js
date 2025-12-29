@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Tollgate Canyon Retreat",
             subtitle: "Sleeps 12 • 4 bedrooms • 3 baths",
             description: "Spacious mountain cabin with stunning views, private hot tub, and game room.",
-            image: "https://www.cuvee.com/wp-content/uploads/2024/07/ParkCity.webp",
+            image: "assets/images/ParkCity.webp",
             amenities: ["Hot tub", "Fireplace", "Game room", "WiFi", "Full kitchen", "Pet-friendly"],
             links: [
                 { text: "Book on Airbnb", url: "https://www.airbnb.com/rooms/EXAMPLE1" },

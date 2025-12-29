@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Landon’s Stays | Park City & Mountain Short-Term Rentals</title>
+  <meta name="description" content="Book beautiful short-term rentals near Park City. Hot tubs, mountain views, family-friendly spaces, and easy access to skiing, dining, and shopping." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Landon’s Stays | Short-Term Rentals" />
+  <meta property="og:description" content="Mountain cabins & Park City-area stays. Browse properties and book direct via Airbnb/VRBO links." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/hero.jpg" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%94%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Optional: JSON-LD (edit name/phone/email) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LodgingBusiness",
+    "name":"Landon’s Stays",
+    "telephone":"+1-303-408-9431",
+    "email":"hampparkcity@gmail.com",
+    "areaServed":"Park City, UT"
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <span class="brand-mark" aria-hidden="true">🏔️</span>
+        <span class="brand-text">
+          <strong>Landon’s Stays</strong>
+          <small>Short-Term Rentals</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Toggle menu</span>
+        <span class="burger" aria-hidden="true"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <a href="#properties">Properties</a>
+        <a href="#highlights">Why Stay With Us</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="btn btn-small">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Park City • Tollgate Canyon • Mountain Getaways</p>
+          <h1>Beautiful stays built for snow days, sunny hikes, and everything in between.</h1>
+          <p class="lead">
+            Browse our handpicked short-term rentals — hot tubs, cozy fireplaces, room for the whole crew,
+            and quick access to Park City dining, shopping, and world-class resorts.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#properties">View Properties</a>
+            <a class="btn btn-ghost" href="#contact">Ask a Question</a>
+          </div>
+
+          <div class="trust-row" aria-label="Highlights">
+            <div class="pill">⭐ Family-friendly</div>
+            <div class="pill">🛁 Hot tubs (select homes)</div>
+            <div class="pill">🚗 Easy access to town</div>
+          </div>
+        </div>
+
+        <div class="hero-card" role="region" aria-label="Quick booking">
+          <div class="hero-card-media">
+            <img src="assets/images/hero.jpg" alt="Mountain rental exterior with forest views" loading="eager" />
+          </div>
+          <div class="hero-card-body">
+            <h2>Ready to book?</h2>
+            <p>Tap a property below to view details and booking links.</p>
+            <a class="btn btn-small" href="#properties">Browse listings</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-wave" aria-hidden="true"></div>
+    </section>
+
+    <!-- PROPERTIES -->
+    <section id="properties" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Properties</h2>
+          <p class="muted">Click any stay to see full details, amenities, and booking links.</p>
+        </div>
+
+        <div id="property-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section id="highlights" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why guests love these stays</h2>
+          <p class="muted">Designed for comfort, convenience, and unforgettable mountain memories.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>🧖‍♂️ Relax after adventure</h3>
+            <p>Hot tubs, cozy seating, and spaces to unwind after skiing, snowmobiling, hiking, or biking.</p>
+          </article>
+          <article class="feature">
+            <h3>🍳 Cook, gather, celebrate</h3>
+            <p>Big kitchens, open layouts, and plenty of room for meals, games, and movie nights.</p>
+          </article>
+          <article class="feature">
+            <h3>🎿 Close to the action</h3>
+            <p>Quick drives to Park City Mountain, Deer Valley, Canyons, outlets, restaurants, and Woodward.</p>
+          </article>
+          <article class="feature">
+            <h3>🦌 Mountain vibes</h3>
+            <p>Fresh air, wide-open views, and frequent wildlife sightings — the real “getaway” feeling.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Gallery</h2>
+          <p class="muted">Replace these with your best photos. Click to enlarge.</p>
+        </div>
+
+        <div class="gallery" id="gallery-grid">
+          <button class="gallery-item" data-img="assets/images/gallery-1.jpg" aria-label="Open photo 1">
+            <img src="assets/images/gallery-1.jpg" alt="Rental interior" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-img="assets/images/gallery-2.jpg" aria-label="Open photo 2">
+            <img src="assets/images/gallery-2.jpg" alt="Hot tub at night" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-img="assets/images/gallery-3.jpg" aria-label="Open photo 3">
+            <img src="assets/images/gallery-3.jpg" alt="Mountain view" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-img="assets/images/gallery-4.jpg" aria-label="Open photo 4">
+            <img src="assets/images/gallery-4.jpg" alt="Cozy living room" loading="lazy" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>FAQ</h2>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>How do I book?</summary>
+            <div class="faq-body">
+              <p>Open a property card and use the booking buttons (Airbnb/VRBO/direct link). You can also contact us below.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>What’s nearby?</summary>
+            <div class="faq-body">
+              <p>Park City resorts, Deer Valley, Canyons, Kimball Junction shopping/outlets, restaurants, movie theater, and Woodward.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Winter driving tips?</summary>
+            <div class="faq-body">
+              <p>Mountain roads can be snowy/icy. Plan for AWD/4x4 when conditions require it and check the forecast before arrival.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <div>
+            <h2>Contact</h2>
+            <p class="muted">
+              Have questions, special requests, or want help picking the perfect home?
+            </p>
+
+            <div class="contact-cards">
+              <div class="contact-card">
+                <div class="contact-icon" aria-hidden="true">📞</div>
+                <div>
+                  <strong>Call / Text</strong>
+                  <a href="tel:+13034089431">303-408-9431</a>
+                </div>
+              </div>
+              <div class="contact-card">
+                <div class="contact-icon" aria-hidden="true">✉️</div>
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:hampparkcity@gmail.com">hampparkcity@gmail.com</a>
+                </div>
+              </div>
+            </div>
+
+            <p class="fineprint">
+              Tip: if you want a direct form submission to your email, set up a free Formspree endpoint and paste it into <code>script.js</code>.
+            </p>
+          </div>
+
+          <form class="form" id="contact-form">
+            <label>
+              Name
+              <input name="name" required autocomplete="name" />
+            </label>
+
+            <label>
+              Email
+              <input name="email" type="email" required autocomplete="email" />
+            </label>
+
+            <label>
+              Message
+              <textarea name="message" rows="5" required placeholder="Dates, guest count, property questions, etc."></textarea>
+            </label>
+
+            <button class="btn" type="submit">Send message</button>
+            <p class="form-status" id="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Landon’s Stays. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#properties">Properties</a>
+        <a href="#contact">Contact</a>
+        <a href="#" id="back-to-top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROPERTY MODAL -->
+  <div class="modal" id="property-modal" aria-hidden="true" role="dialog" aria-label="Property details">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" type="button" aria-label="Close" data-close="true">✕</button>
+
+      <div class="modal-media">
+        <img id="modal-img" src="" alt="" />
+      </div>
+
+      <div class="modal-body">
+        <h3 id="modal-title"></h3>
+        <p class="muted" id="modal-subtitle"></p>
+        <p id="modal-description"></p>
+
+        <div class="amenities" id="modal-amenities" aria-label="Amenities"></div>
+
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lightbox-backdrop" data-lightbox-close="true"></div>
+    <figure class="lightbox-figure">
+      <button class="lightbox-close" type="button" aria-label="Close" data-lightbox-close="true">✕</button>
+      <img id="lightbox-img" src="" alt="" />
+    </figure>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

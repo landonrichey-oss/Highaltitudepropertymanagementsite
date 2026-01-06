@@ -1,47 +1,25 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Landon’s Stays | Park City & Mountain Short-Term Rentals</title>
-  <meta name="description"
-    content="Book beautiful short-term rentals near Park City. Hot tubs, mountain views, family-friendly spaces, and easy access to skiing, dining, and shopping." />
+  <title>High Altitude Property Management | Short-Term Rentals</title>
+  <meta name="description" content="Short-term rentals near Park City & mountain getaways. Browse properties, view photos, and book online." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Landon’s Stays | Short-Term Rentals" />
-  <meta property="og:description"
-    content="Mountain cabins & Park City-area stays. Browse properties and book direct via Airbnb/VRBO links." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image"
-    content="https://dlajgvw9htjpb.cloudfront.net/cms/b8538865-5054-4aa7-98ef-0f06241b12ee/12500524/-5585741069295927334.jpg" />
-
-  <link rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%94%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <!-- Change to your CSS file name if needed -->
   <link rel="stylesheet" href="main.css" />
-
-  <!-- Optional: JSON-LD (edit name/phone/email) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LodgingBusiness",
-    "name":"Landon’s Stays",
-    "telephone":"+1-303-408-9431",
-    "email":"hampparkcity@gmail.com",
-    "areaServed":"Park City, UT"
-  }
-  </script>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- HEADER -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#">
         <span class="brand-mark" aria-hidden="true">🏔️</span>
         <span class="brand-text">
-          <strong>Landon’s Stays</strong>
+          <strong>High Altitude Property Management</strong>
           <small>Short-Term Rentals</small>
         </span>
       </a>
@@ -53,9 +31,7 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Primary">
         <a href="#properties">Properties</a>
-        <a href="#highlights">Why Stay With Us</a>
         <a href="#gallery">Gallery</a>
-        <a href="#faq">FAQ</a>
         <a href="#contact" class="btn btn-small">Contact</a>
       </nav>
     </div>
@@ -66,34 +42,32 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Park City • Tollgate Canyon • Mountain Getaways</p>
-          <h1>Beautiful stays built for snow days, sunny hikes, and everything in between.</h1>
+          <p class="eyebrow">Park City • Mountain Stays • Year-Round Adventures</p>
+          <h1>Mountain getaways made easy.</h1>
           <p class="lead">
-            Browse our handpicked short-term rentals — hot tubs, cozy fireplaces, room for the whole crew,
-            and quick access to Park City dining, shopping, and world-class resorts.
+            Browse our short-term rentals, view photos, check amenities, and book directly through Airbnb/VRBO links.
           </p>
+
           <div class="hero-actions">
             <a class="btn" href="#properties">View Properties</a>
             <a class="btn btn-ghost" href="#contact">Ask a Question</a>
           </div>
 
           <div class="trust-row" aria-label="Highlights">
-            <div class="pill">⭐ Family-friendly</div>
+            <div class="pill">⭐ Guest-ready</div>
             <div class="pill">🛁 Hot tubs (select homes)</div>
-            <div class="pill">🚗 Easy access to town</div>
+            <div class="pill">🚗 Close to town</div>
           </div>
         </div>
 
-        <div class="hero-card" role="region" aria-label="Quick booking">
+        <div class="hero-card" role="region" aria-label="Quick info">
           <div class="hero-card-media">
-            <img
-              src="https://dlajgvw9htjpb.cloudfront.net/cms/b8538865-5054-4aa7-98ef-0f06241b12ee/12500524/-5585741069295927334.jpg"
-              alt="Luxury mountain rental exterior with hot tub and stunning views" loading="eager" />
+            <img src="assets/images/Fortuni.jpg" alt="Mountain stay" loading="eager" />
           </div>
           <div class="hero-card-body">
-            <h2>Ready to book?</h2>
-            <p>Tap a property below to view details and booking links.</p>
-            <a class="btn btn-small" href="#properties">Browse listings</a>
+            <h2>Quick tip</h2>
+            <p>Click “View details” for photos + amenities.</p>
+            <a class="btn btn-small" href="#properties">Browse stays</a>
           </div>
         </div>
       </div>
@@ -106,124 +80,35 @@
       <div class="container">
         <div class="section-head">
           <h2>Properties</h2>
-          <p class="muted">Click any stay to see full details, amenities, and booking links.</p>
+          <p class="muted">Click “View details” to see photos, amenities, and booking links.</p>
         </div>
 
+        <!-- IMPORTANT: script.js renders cards here -->
         <div id="property-grid" class="grid"></div>
       </div>
     </section>
 
-    <!-- HIGHLIGHTS -->
-    <section id="highlights" class="section section-alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>Why guests love these stays</h2>
-          <p class="muted">Designed for comfort, convenience, and unforgettable mountain memories.</p>
-        </div>
-
-        <div class="feature-grid">
-          <article class="feature">
-            <h3>🧖‍♂️ Relax after adventure</h3>
-            <p>Hot tubs, cozy seating, and spaces to unwind after skiing, snowmobiling, hiking, or biking.</p>
-          </article>
-          <article class="feature">
-            <h3>🍳 Cook, gather, celebrate</h3>
-            <p>Big kitchens, open layouts, and plenty of room for meals, games, and movie nights.</p>
-          </article>
-          <article class="feature">
-            <h3>🎿 Close to the action</h3>
-            <p>Quick drives to Park City Mountain, Deer Valley, Canyons, outlets, restaurants, and Woodward.</p>
-          </article>
-          <article class="feature">
-            <h3>🦌 Mountain vibes</h3>
-            <p>Fresh air, wide-open views, and frequent wildlife sightings — the real “getaway” feeling.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- GALLERY -->
-    <section id="gallery" class="section">
+    <section id="gallery" class="section section-alt">
       <div class="container">
         <div class="section-head">
           <h2>Gallery</h2>
-          <p class="muted">Real photos from our Park City-area rentals. Click to enlarge.</p>
+          <p class="muted">Click any photo to enlarge.</p>
         </div>
 
         <div class="gallery" id="gallery-grid">
-          <button class="gallery-item"
-            data-img="https://media.scurto.net/2016/Uploads/Blog/07Jul24/red-pine-residence-living-area-min.jpg"
-            aria-label="Open photo 1">
-            <img src="https://media.scurto.net/2016/Uploads/Blog/07Jul24/red-pine-residence-living-area-min.jpg"
-              alt="Cozy living room with fireplace and mountain views" loading="lazy" />
+          <button class="gallery-item" data-img="assets/images/Rustic-Roots.jpg" aria-label="Open photo 1">
+            <img src="assets/images/Rustic-Roots.jpg" alt="Gallery photo 1" loading="lazy" />
           </button>
-          <button class="gallery-item"
-            data-img="https://media.vrbo.com/lodging/99000000/98060000/98057800/98057779/f90739f3.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
-            aria-label="Open photo 2">
-            <img
-              src="https://media.vrbo.com/lodging/99000000/98060000/98057800/98057779/f90739f3.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
-              alt="Private hot tub on deck at night with snow" loading="lazy" />
+          <button class="gallery-item" data-img="assets/images/Bright-Mountain-Retreat-1.jpg" aria-label="Open photo 2">
+            <img src="assets/images/Bright-Mountain-Retreat-1.jpg" alt="Gallery photo 2" loading="lazy" />
           </button>
-          <button class="gallery-item"
-            data-img="https://media.vrbo.com/lodging/112000000/111330000/111327700/111327671/3eec6866.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
-            aria-label="Open photo 3">
-            <img
-              src="https://media.vrbo.com/lodging/112000000/111330000/111327700/111327671/3eec6866.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
-              alt="Stunning mountain view from cabin deck" loading="lazy" />
+          <button class="gallery-item" data-img="assets/images/gallery-3.jpg" aria-label="Open photo 3">
+            <img src="assets/images/gallery-3.jpg" alt="Gallery photo 3" loading="lazy" />
           </button>
-          <button class="gallery-item"
-            data-img="https://cdn-ilddien.nitrocdn.com/NTaCDgTTcBizaUWpGrtchenOXZxmFBwN/assets/images/optimized/rev-33dc713/www.abodeparkcity.com/wp-content/uploads/2025/11/Reserve-our-Abode-at-Twilight-Ranch-Park-City-Vacation-Rentals-min.jpeg"
-            aria-label="Open photo 4">
-            <img
-              src="https://cdn-ilddien.nitrocdn.com/NTaCDgTTcBizaUWpGrtchenOXZxmFBwN/assets/images/optimized/rev-33dc713/www.abodeparkcity.com/wp-content/uploads/2025/11/Reserve-our-Abode-at-Twilight-Ranch-Park-City-Vacation-Rentals-min.jpeg"
-              alt="Modern cozy kitchen in mountain home" loading="lazy" />
+          <button class="gallery-item" data-img="assets/images/gallery-4.jpg" aria-label="Open photo 4">
+            <img src="assets/images/gallery-4.jpg" alt="Gallery photo 4" loading="lazy" />
           </button>
-          <button class="gallery-item"
-            data-img="https://img.peerspace.com/image/upload/f_auto,q_auto,dpr_auto,w_3840/ixmoo7t01c9kwjegb6eo"
-            aria-label="Open photo 5">
-            <img src="https://img.peerspace.com/image/upload/f_auto,q_auto,dpr_auto,w_3840/ixmoo7t01c9kwjegb6eo"
-              alt="Rustic interior living room with great views" loading="lazy" />
-          </button>
-          <button class="gallery-item" data-img="https://uc.orez.io/i/0fb36f7bd3f4454d883bf27e0cfac5c8-LargeOriginal"
-            aria-label="Open photo 6">
-            <img src="https://uc.orez.io/i/0fb36f7bd3f4454d883bf27e0cfac5c8-LargeOriginal"
-              alt="Hot tub with snowy mountain backdrop at dusk" loading="lazy" />
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section section-alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>FAQ</h2>
-        </div>
-
-        <div class="faq">
-          <details>
-            <summary>How do I book?</summary>
-            <div class="faq-body">
-              <p>Open a property card and use the booking buttons (Airbnb/VRBO/direct link). You can also contact us
-                below.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>What’s nearby?</summary>
-            <div class="faq-body">
-              <p>Park City resorts, Deer Valley, Canyons, Kimball Junction shopping/outlets, restaurants, movie theater,
-                and Woodward.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>Winter driving tips?</summary>
-            <div class="faq-body">
-              <p>Mountain roads can be snowy/icy. Plan for AWD/4x4 when conditions require it and check the forecast
-                before arrival.</p>
-            </div>
-          </details>
         </div>
       </div>
     </section>
@@ -234,31 +119,25 @@
         <div class="contact-grid">
           <div>
             <h2>Contact</h2>
-            <p class="muted">
-              Have questions, special requests, or want help picking the perfect home?
-            </p>
+            <p class="muted">Questions about dates, access, or the right place for your group? Reach out.</p>
 
             <div class="contact-cards">
               <div class="contact-card">
                 <div class="contact-icon" aria-hidden="true">📞</div>
                 <div>
-                  <strong>Call / Text</strong>
+                  <strong>Call / Text</strong><br />
                   <a href="tel:+13034089431">303-408-9431</a>
                 </div>
               </div>
+
               <div class="contact-card">
                 <div class="contact-icon" aria-hidden="true">✉️</div>
                 <div>
-                  <strong>Email</strong>
+                  <strong>Email</strong><br />
                   <a href="mailto:hampparkcity@gmail.com">hampparkcity@gmail.com</a>
                 </div>
               </div>
             </div>
-
-            <p class="fineprint">
-              Tip: if you want a direct form submission to your email, set up a free Formspree endpoint and paste it
-              into <code>script.js</code>.
-            </p>
           </div>
 
           <form class="form" id="contact-form">
@@ -274,8 +153,7 @@
 
             <label>
               Message
-              <textarea name="message" rows="5" required
-                placeholder="Dates, guest count, property questions, etc."></textarea>
+              <textarea name="message" rows="5" required placeholder="Dates, guest count, property questions, etc."></textarea>
             </label>
 
             <button class="btn" type="submit">Send message</button>
@@ -286,9 +164,10 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Landon’s Stays. All rights reserved.</p>
+      <p>© <span id="year"></span> High Altitude Property Management. All rights reserved.</p>
       <div class="footer-links">
         <a href="#properties">Properties</a>
         <a href="#contact">Contact</a>
@@ -300,10 +179,12 @@
   <!-- PROPERTY MODAL -->
   <div class="modal" id="property-modal" aria-hidden="true" role="dialog" aria-label="Property details">
     <div class="modal-backdrop" data-close="true"></div>
+
     <div class="modal-panel" role="document">
       <button class="modal-close" type="button" aria-label="Close" data-close="true">✕</button>
 
       <div class="modal-media">
+        <!-- IMPORTANT: script.js replaces this with the slider automatically -->
         <img id="modal-img" src="" alt="" />
       </div>
 
@@ -313,7 +194,6 @@
         <p id="modal-description"></p>
 
         <div class="amenities" id="modal-amenities" aria-label="Amenities"></div>
-
         <div class="modal-actions" id="modal-actions"></div>
       </div>
     </div>
@@ -330,5 +210,4 @@
 
   <script src="script.js"></script>
 </body>
-
 </html>

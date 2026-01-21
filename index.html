@@ -6,7 +6,7 @@
   <title>High Altitude Property Management | Short-Term Rentals</title>
   <meta name="description" content="Short-term rentals near Park City & mountain getaways. Browse properties, view photos, and book online." />
 
-  <!-- Change to your CSS file name if needed -->
+  <!-- CSS -->
   <link rel="stylesheet" href="main.css" />
 </head>
 
@@ -71,7 +71,6 @@
           </div>
         </div>
       </div>
-
     </section>
 
     <!-- PROPERTIES -->
@@ -87,28 +86,15 @@
       </div>
     </section>
 
-    <!-- GALLERY -->
+    <!-- ✅ AUTO GALLERY (script.js renders ALL properties here) -->
     <section id="gallery" class="section section-alt">
       <div class="container">
         <div class="section-head">
           <h2>Gallery</h2>
-          <p class="muted">Click any photo to enlarge.</p>
+          <p class="muted">Tap any photo to open the property details.</p>
         </div>
 
-        <div class="gallery" id="gallery-grid">
-          <button class="gallery-item" data-img="assets/images/Rustic-Roots.jpg" aria-label="Open photo 1">
-            <img src="assets/images/Rustic-Roots.jpg" alt="Gallery photo 1" loading="lazy" />
-          </button>
-          <button class="gallery-item" data-img="assets/images/Bright-Mountain-Retreat-1.jpg" aria-label="Open photo 2">
-            <img src="assets/images/Bright-Mountain-Retreat-1.jpg" alt="Gallery photo 2" loading="lazy" />
-          </button>
-          <button class="gallery-item" data-img="assets/images/gallery-3.jpg" aria-label="Open photo 3">
-            <img src="assets/images/gallery-3.jpg" alt="Gallery photo 3" loading="lazy" />
-          </button>
-          <button class="gallery-item" data-img="assets/images/gallery-4.jpg" aria-label="Open photo 4">
-            <img src="assets/images/gallery-4.jpg" alt="Gallery photo 4" loading="lazy" />
-          </button>
-        </div>
+        <div class="gallery" id="gallery-grid"></div>
       </div>
     </section>
 
@@ -183,7 +169,7 @@
       <button class="modal-close" type="button" aria-label="Close" data-close="true">✕</button>
 
       <div class="modal-media">
-        <!-- IMPORTANT: script.js replaces this with the slider automatically -->
+        <!-- script.js replaces this with the slider -->
         <img id="modal-img" src="" alt="" />
       </div>
 
@@ -198,15 +184,24 @@
     </div>
   </div>
 
-  <!-- GALLERY LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
-    <div class="lightbox-backdrop" data-lightbox-close="true"></div>
-    <figure class="lightbox-figure">
-      <button class="lightbox-close" type="button" aria-label="Close" data-lightbox-close="true">✕</button>
-      <img id="lightbox-img" src="" alt="" />
-    </figure>
+  <!-- ✅ FULLSCREEN SWIPE GALLERY OVERLAY -->
+  <div class="gallery-overlay" id="galleryOverlay" aria-hidden="true">
+    <button class="gallery-close" id="galleryClose" type="button" aria-label="Close fullscreen photos">✕</button>
+
+    <button class="gallery-nav prev" id="galleryPrev" type="button" aria-label="Previous photo">‹</button>
+    <button class="gallery-nav next" id="galleryNext" type="button" aria-label="Next photo">›</button>
+
+    <div class="gallery-viewport">
+      <div class="gallery-track" id="galleryTrack"></div>
+    </div>
+
+    <div class="gallery-dots" id="galleryDots" aria-label="Fullscreen slide dots"></div>
   </div>
 
+  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
+
+
+

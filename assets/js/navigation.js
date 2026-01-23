@@ -74,17 +74,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sectionId === "properties") {
       const url = new URL(window.location);
 
-      // If coming from menu/nav and there's a ?property=, clear it to show gallery
-      if (propertySlug === null && url.searchParams.has("property")) {
-        url.searchParams.delete("property");
-        window.history.replaceState(null, "", url);
+      // If NO property slug → force gallery + clear active state
+      if (!propertySlug) {
+        // Clear query param if present
+        if (url.searchParams.has("property")) {
+          url.searchParams.delete("property");
+          window.history.replaceState(null, "", url);
+        }
+
+        // Tell properties.js to reset view
+        if (typeof window.showPropertyDetail === "function") {
+          // Passing null intentionally triggers gallery state
+          window.showPropertyDetail(null);
+        }
+
+        return;
       }
 
-      // If we have a specific property slug (from URL or click), open detail view
-      if (propertySlug && typeof window.showPropertyDetail === "function") {
+      // If we DO have a property slug → open detail
+      if (typeof window.showPropertyDetail === "function") {
         window.showPropertyDetail(propertySlug);
       }
     }
+
   }
 
   // Helper: parse section + property from current URL (hash or search)

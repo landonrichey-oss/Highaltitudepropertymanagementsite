@@ -115,13 +115,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const detailEl      = document.getElementById("property-detail");
 
   // ── View Switching Helpers ─────────────────────────────────────────────────
-  function showGallery() {
-    if (galleryView) galleryView.style.display = "block";
-    if (detailView)  detailView.style.display = "none";
+function showGallery() {
+  if (galleryView) galleryView.style.display = "block";
+  if (detailView)  detailView.style.display = "none";
 
-    // Clear detail to free memory
-    if (detailEl) detailEl.innerHTML = "";
-  }
+  // Clear detail to free memory
+  if (detailEl) detailEl.innerHTML = "";
+
+  // Clear active slug/chip
+  clearActiveChip();
+
+  // Remove property from hash (keep #properties if you want)
+  const url = new URL(window.location);
+  url.hash = "properties";
+  window.history.pushState(null, "", url);
+}
+
 
   function showDetail() {
     if (galleryView) galleryView.style.display = "none";
@@ -294,10 +303,24 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
+  const clearActiveChip = () => {
+  document.querySelectorAll(".property-chip.active").forEach(btn =>
+    btn.classList.remove("active")
+  );
+};
+
+
   // ── Expose detail opener for navigation.js ────────────────────────────────
   window.showPropertyDetail = slug => {
-    const prop = properties.find(p => p.slug === slug) ||
-                 properties.find(p => p.slug?.toLowerCase() === slug?.toLowerCase());
+    if (!slug) {
+      showGallery();
+      return;
+    }
+
+    const prop =
+      properties.find(p => p.slug === slug) ||
+      properties.find(p => p.slug?.toLowerCase() === slug?.toLowerCase());
+
     if (prop) {
       setActiveChip(slug);
       renderPropertyDetail(prop);

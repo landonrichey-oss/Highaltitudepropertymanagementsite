@@ -33,8 +33,7 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Primary">
         <a href="#home" class="nav-link" data-section="home">Home</a>
-        <a href="#properties" class="nav-link" data-section="properties">Properties</a>
-        <a href="#gallery" class="nav-link" data-section="gallery">Gallery</a>
+        <a href="#properties-gallery" class="nav-link" data-section="properties-gallery">Properties</a>
         <a href="#contact" class="nav-link btn btn-small" data-section="contact">Contact</a>
       </nav>
     </div>
@@ -132,20 +131,20 @@
     </section>
 
     <!-- GALLERY SECTION -->
-    <section id="gallery" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Gallery</h2>
-          <p class="muted">Tap any photo to open the property details.</p>
-        </div>
-
-        <div class="gallery" id="gallery-grid"></div>
-
-        <div style="margin-top:18px;">
-          <a class="btn" href="#properties">Browse all properties</a>
-        </div>
+  <section id="properties-gallery" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Properties</h2>
+        <p class="muted">Browse our collection — tap any photo to see full details and availability.</p>
       </div>
-    </section>
+
+      <div class="gallery" id="gallery-grid"></div>
+
+      <div style="margin-top:18px;">
+        <a class="btn" href="#properties">View detailed listings</a>
+      </div>
+    </div>
+  </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="section">
@@ -235,122 +234,12 @@
   </div>
 
   <!-- SCRIPTS -->
-  <script src="assets/js/properties-data.js"></script>
-  <script src="assets/js/script.js" defer></script>
+  <script src="assets/js/properties-data.js" defer></script>
+  <script src="assets/js/navigation.js" defer></script>
+  <script src="assets/js/properties.js" defer></script>
+  <script src="assets/js/modal.js" defer></script>
+  <script src="assets/js/contact-form.js" defer></script>
 
-<!-- SECTION SWITCHING LOGIC -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-link, .brand');
-
-    // Safely get properties from properties-data.js
-    const properties = Array.isArray(window.allProperties) ? window.allProperties : [];
-
-    if (properties.length === 0) {
-      console.warn("No properties loaded – check properties-data.js syntax and load order");
-    }
-
-    function showSection(sectionId) {
-      console.log("Switching to section:", sectionId); // debug
-
-      sections.forEach(sec => {
-        sec.classList.toggle('active-section', sec.id === sectionId);
-      });
-
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Re-render dynamic content
-      if (sectionId === 'properties') {
-        console.log("Rendering properties section – properties count:", properties.length);
-        if (typeof renderPropertyPicker === 'function') {
-          renderPropertyPicker();           // rebuild chips + auto-select
-        }
-        loadPropertyFromUrl();              // apply ?property= param
-      }
-      if (sectionId === 'gallery') {
-        if (typeof renderGalleryLinks === 'function') {
-          renderGalleryLinks();
-        }
-      }
-    }
-
-    function loadPropertyFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const slug = params.get("property")?.trim();
-
-      if (!slug || properties.length === 0) return;
-
-      const prop = properties.find(p => p?.slug === slug) ||
-        properties.find(p => p?.slug?.toLowerCase() === slug.toLowerCase());
-
-      if (prop && typeof renderPropertyDetail === 'function') {
-        console.log("Loading property from URL param:", prop.slug); // debug
-        if (typeof setActiveChip === 'function') {
-          setActiveChip(prop.slug);
-        }
-        renderPropertyDetail(prop);
-        document.getElementById("property-detail")?.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        const href = link.getAttribute('href');
-        if (href?.startsWith('#')) {
-          e.preventDefault();
-          const target = href.substring(1);
-          showSection(target);
-
-          navLinks.forEach(l => l.classList.remove('active'));
-          if (link.classList.contains('nav-link')) {
-            link.classList.add('active');
-          }
-        }
-      });
-    });
-
-    // Initial load
-    let initialSection = 'home';
-    if (location.hash) {
-      initialSection = location.hash.substring(1).split('?')[0] || 'home';
-    }
-    showSection(initialSection);
-
-    // Handle direct load with param
-    if (initialSection === 'properties' || location.search.includes('property=')) {
-      setTimeout(() => {
-        console.log("Initial param check");
-        loadPropertyFromUrl();
-      }, 250);
-    }
-
-    // Hash change (back/forward)
-    window.addEventListener('hashchange', () => {
-      const newSection = location.hash.substring(1).split('?')[0] || 'home';
-      showSection(newSection);
-    });
-  });
-</script>
-
-  <!-- Add this to main.css if not already present -->
-  <style>
-    .section {
-      display: none;
-    }
-
-    .section.active-section {
-      display: block;
-    }
-
-    .nav-link.active,
-    .brand[href="#home"].active {
-      font-weight: bold;
-      color: 
-        var(--color-primary);
-      /* adjust to match your design */
-    }
-  </style>
 </body>
 
 </html>

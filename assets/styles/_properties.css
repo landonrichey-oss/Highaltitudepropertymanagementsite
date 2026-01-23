@@ -136,9 +136,6 @@
 
 .property-hero {
   display: block;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  border-radius: 22px;
   overflow: hidden;
 }
 
@@ -219,4 +216,81 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 14px;
+}
+
+/* ─────────────────────────────────────────────
+   Booking Card (Lodgify iframe wrapper)
+   ───────────────────────────────────────────── */
+
+.booking-card {
+  margin-top: 18px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Header */
+.booking-card-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.85),
+      rgba(10,15,30,0.85)
+    );
+}
+
+.booking-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #fff;
+}
+
+.booking-card-header p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+}
+
+/* Body */
+.booking-card-body {
+  background: rgba(126,184,196,0.95);
+}
+
+/* Iframe */
+.booking-card-body iframe {
+  display: block;
+  width: 100%;
+  min-height: 760px;
+  border: 0;
+  background: transparent;
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+  .booking-card-body iframe {
+    min-height: 900px;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-card {
+    border-radius: 18px;
+  }
+
+  .booking-card-header {
+    padding: 14px;
+  }
+
+  .booking-card-header h3 {
+    font-size: 16px;
+  }
 }

@@ -215,76 +215,115 @@ function showGallery() {
   };
 
   // ── Render Property Detail ─────────────────────────────────────────────────
-  const renderPropertyDetail = async prop => {
-    if (!detailEl || !prop?.slug) return;
+const renderPropertyDetail = async prop => {
+  if (!detailEl || !prop?.slug) return;
 
-    const cover = getCoverImage(prop);
-    const extras = await fetchLodgifyExtras(prop.slug);
-    const bookingUrl = ensureHttps(extras.calendar_embed_url);
+  const cover = getCoverImage(prop);
+  const extras = await fetchLodgifyExtras(prop.slug);
+  const bookingUrl = ensureHttps(extras.calendar_embed_url);
 
-    const bookingEmbed = bookingUrl ? `
-      <div class="mt-8 border-t pt-6">
-        <div class="bg-gray-100 rounded-lg overflow-hidden">
-          <iframe 
-            src="${bookingUrl}" 
-            style="width:100%; height:800px; border:none;" 
+  const bookingEmbed = bookingUrl ? `
+    <div class="mt-8 border-t pt-6">
+      <div class="booking-card">
+        <div class="booking-card-header">
+          <h3>Check Availability</h3>
+          <p>Book direct • Best rates guaranteed</p>
+        </div>
+
+        <div class="booking-card-body">
+          <iframe
+            src="${bookingUrl}"
             title="Booking Calendar & Form"
-            allowfullscreen
             loading="lazy"
+            allowfullscreen
           ></iframe>
         </div>
       </div>
-    ` : `
-      <div class="mt-8 border-t pt-6">
-        <h3 class="text-xl font-bold mb-4">Booking</h3>
-        <p class="text-gray-700">Direct booking not available – contact us for reservations.</p>
-      </div>
-    `;
+    </div>
+  ` : `
+    <div class="mt-8 border-t pt-6">
+      <h3 class="text-xl font-bold mb-4">Booking</h3>
+      <p class="text-gray-700">
+        Direct booking not available – contact us for reservations.
+      </p>
+    </div>
+  `;
 
-    detailEl.innerHTML = `
-      <div class="property-hero">
-        <button class="property-hero-media" type="button" id="openPhotosBtn" aria-label="View full photo gallery">
-          <img src="${cover}" alt="${prop.title || "Property"}" loading="eager" width="800" height="600" />
-          <div class="property-hero-badge">View Photos</div>
-        </button>
+  detailEl.innerHTML = `
+    <div class="property-hero">
+      <button
+        class="property-hero-media"
+        type="button"
+        id="openPhotosBtn"
+        aria-label="View full photo gallery"
+      >
+        <img
+          src="${cover}"
+          alt="${prop.title || "Property"}"
+          loading="eager"
+          width="800"
+          height="600"
+        />
+        <div class="property-hero-badge">View Photos</div>
+      </button>
 
-        <div class="property-hero-body">
-          <div class="property-hero-top">
-            <div>
-              <h1 class="property-title">${prop.title || "Untitled Property"}</h1>
-              <p class="property-subtitle">${prop.subtitle || ""}</p>
-            </div>
-            <div class="property-hero-actions">
-              <button class="btn btn-ghost btn-small" id="sharePropertyBtn">🔗 Share</button>
-            </div>
+      <div class="property-hero-body">
+        <div class="property-hero-top">
+          <div>
+            <h1 class="property-title">${prop.title || "Untitled Property"}</h1>
+            <p class="property-subtitle">${prop.subtitle || ""}</p>
           </div>
-
-          <p class="property-desc">${(prop.description || "").replace(/\n/g, "<br>")}</p>
-
-          ${bookingEmbed}
-
-          <div class="property-links mt-8 flex flex-wrap gap-3">
-            ${(prop.links || []).filter(l => l?.url && l.text).map(link => {
-              const href = ensureHttps(link.url);
-              const cls = link.style === "primary" ? " btn-primary" : " btn-ghost";
-              return `<a class="btn btn-small${cls}" href="${href}" target="_blank" rel="noopener noreferrer">${link.text}</a>`;
-            }).join("")}
+          <div class="property-hero-actions">
+            <button class="btn btn-ghost btn-small" id="sharePropertyBtn">
+              🔗 Share
+            </button>
           </div>
         </div>
+
+        <p class="property-desc">
+          ${(prop.description || "").replace(/\n/g, "<br>")}
+        </p>
+
+        ${bookingEmbed}
+
+        <div class="property-links mt-8 flex flex-wrap gap-3">
+          ${(prop.links || [])
+            .filter(l => l?.url && l.text)
+            .map(link => {
+              const href = ensureHttps(link.url);
+              const cls = link.style === "primary" ? " btn-primary" : " btn-ghost";
+              return `
+                <a
+                  class="btn btn-small${cls}"
+                  href="${href}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ${link.text}
+                </a>
+              `;
+            }).join("")}
+        </div>
       </div>
-    `;
+    </div>
+  `;
 
-    setImgFallback(detailEl.querySelector("img"));
+  setImgFallback(detailEl.querySelector("img"));
 
-    const shareBtn = document.getElementById("sharePropertyBtn");
-    shareBtn?.addEventListener("click", () => copyShareLink(prop.slug));
+  document
+    .getElementById("sharePropertyBtn")
+    ?.addEventListener("click", () => copyShareLink(prop.slug));
 
-    const photosBtn = document.getElementById("openPhotosBtn");
-    photosBtn?.addEventListener("click", () => {
+  document
+    .getElementById("openPhotosBtn")
+    ?.addEventListener("click", () => {
       const idx = properties.findIndex(p => p.slug === prop.slug);
-      if (idx !== -1 && window.openPropertyModal) window.openPropertyModal(idx);
+      if (idx !== -1 && window.openPropertyModal) {
+        window.openPropertyModal(idx);
+      }
     });
   };
+
 
   const setActiveChip = slug => {
     document.querySelectorAll(".property-chip").forEach(btn =>
@@ -293,11 +332,10 @@ function showGallery() {
   };
 
   const clearActiveChip = () => {
-  document.querySelectorAll(".property-chip.active").forEach(btn =>
-    btn.classList.remove("active")
-  );
-};
-
+    document.querySelectorAll(".property-chip.active").forEach(btn =>
+      btn.classList.remove("active")
+    );
+  };
 
   // ── Expose detail opener for navigation.js ────────────────────────────────
   window.showPropertyDetail = slug => {

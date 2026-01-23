@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "80acreprivatemountainresort": 494366,
     "parkcitycondominsfromslope": 729438,
     "elkhavenaboveparkcity": null
-    // Add more if needed
   };
 
   const lodgifyCache = new Map();
@@ -138,7 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Back button ────────────────────────────────────────────────────────────
   backBtn?.addEventListener("click", () => {
     const url = new URL(window.location);
-    url.searchParams.delete("property");
+    const hash = url.hash.substring(1);
+    if (hash.includes("?")) {
+      url.hash = hash.split("?")[0];  // remove ?property=... from hash
+    }
+    url.searchParams.delete("property"); // also clear real search if present
     window.history.replaceState(null, "", url);
 
     showGallery();
@@ -182,21 +185,16 @@ document.addEventListener("DOMContentLoaded", () => {
           (entries, observer) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
-                // Preload when image is within ~400px of viewport
-                img.loading = "eager"; // switch to eager when near viewport
+                img.loading = "eager";
                 observer.unobserve(img);
               }
             });
           },
-          {
-            rootMargin: "400px 0px", // load 400px before entering viewport
-            threshold: 0.01
-          }
+          { rootMargin: "400px 0px", threshold: 0.01 }
         );
         observer.observe(img);
       }
 
-      // Fallback + loaded class
       img.onload = () => img.classList.add("loaded");
       img.onerror = () => {
         img.src = FALLBACK_IMG;
@@ -217,12 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const prop = properties.find(p => p.slug === slug);
       if (!prop) return;
 
+      // Set param INSIDE hash
       const url = new URL(window.location);
-      url.searchParams.set("property", slug);
+      url.hash = `properties?property=${encodeURIComponent(slug)}`;
       window.history.pushState(null, "", url);
 
       showDetail();
-      updateUrl(slug);
       setActiveChip(slug);
       renderPropertyDetail(prop);
 
@@ -246,7 +244,10 @@ document.addEventListener("DOMContentLoaded", () => {
       chip.textContent = prop.title;
 
       chip.addEventListener("click", () => {
-        updateUrl(prop.slug);
+        const url = new URL(window.location);
+        url.hash = `properties?property=${encodeURIComponent(prop.slug)}`;
+        window.history.replaceState(null, "", url);
+
         setActiveChip(prop.slug);
         renderPropertyDetail(prop);
       });
@@ -258,17 +259,35 @@ document.addEventListener("DOMContentLoaded", () => {
       pickerEl.scrollTo({ left: 0, behavior: "smooth" });
     });
 
-    // Handle ?property= param on load
-    const params = new URLSearchParams(location.search);
-    const slug = params.get("property")?.trim();
+    // Parse param from hash first, then search fallback
+    const url = new URL(window.location);
+    let slug = null;
+
+    // Hash format: #properties?property=slug
+    if (url.hash) {
+      const hashContent = url.hash.substring(1);
+      const parts = hashContent.split("?");
+      if (parts.length > 1) {
+        const hashParams = new URLSearchParams(parts[1]);
+        slug = hashParams.get("property");
+      }
+    }
+
+    // Fallback to real ?property=
+    if (!slug) {
+      slug = url.searchParams.get("property")?.trim();
+    }
+
     if (slug) {
       const prop = properties.find(p => p.slug === slug) ||
                    properties.find(p => p.slug?.toLowerCase() === slug?.toLowerCase());
       if (prop) {
-        updateUrl(slug);
         setActiveChip(slug);
         renderPropertyDetail(prop);
-        showDetail(); // force detail view if direct link
+        showDetail(); // force detail on direct link
+      } else {
+        console.warn(`Property not found for slug: ${slug}`);
+        showGallery();
       }
     } else {
       showGallery();
@@ -365,18 +384,23 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const updateUrl = slug => {
-    if (!slug) return;
-    const url = new URL(window.location.href);
-    url.searchParams.set("property", slug);
-    window.history.replaceState(null, "", url);
+  // ── Expose detail opener for navigation.js ────────────────────────────────
+  window.showPropertyDetail = slug => {
+    const prop = properties.find(p => p.slug === slug) ||
+                 properties.find(p => p.slug?.toLowerCase() === slug?.toLowerCase());
+    if (prop) {
+      setActiveChip(slug);
+      renderPropertyDetail(prop);
+      showDetail();
+    } else {
+      console.warn(`Property slug not found: ${slug}`);
+      showGallery();
+    }
   };
 
   // ── Initialize ─────────────────────────────────────────────────────────────
   window.renderPropertyGrid();   // Render thumbnails once
-
-  // Handle ?property= param or section show (called from navigation.js too)
-  window.renderPropertyPicker();
+  window.renderPropertyPicker(); // Handle param + render chips
 
   console.log(`Properties module loaded – ${properties.length} properties available`);
 });

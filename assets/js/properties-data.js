@@ -25,6 +25,7 @@ window.allProperties = [
             { text: "Book on Airbnb", url: "https://www.airbnb.com/h/rusticrootsretreatparkcity" },
             { text: "Book on VRBO", url: "https://www.vrbo.com/EXAMPLE1" },
         ],
+        featured: true
     },
 
     {
@@ -39,6 +40,7 @@ window.allProperties = [
             { text: "Book on Airbnb", url: "airbnb.com/h/aspengrovecabinaboveparkcity" },
             { text: "Book on VRBO", url: "https://www.vrbo.com/EXAMPLE1" },
         ],
+        featured: true,
     },
 
     {

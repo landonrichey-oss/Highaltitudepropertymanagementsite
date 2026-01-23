@@ -211,8 +211,6 @@ function showGallery() {
       showDetail();
       setActiveChip(slug);
       renderPropertyDetail(prop);
-
-      detailView.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   };
 
@@ -226,7 +224,6 @@ function showGallery() {
 
     const bookingEmbed = bookingUrl ? `
       <div class="mt-8 border-t pt-6">
-        <h3 class="text-xl font-bold mb-4">Book Directly – Check Availability & Reserve</h3>
         <div class="bg-gray-100 rounded-lg overflow-hidden">
           <iframe 
             src="${bookingUrl}" 
@@ -263,14 +260,6 @@ function showGallery() {
           </div>
 
           <p class="property-desc">${(prop.description || "").replace(/\n/g, "<br>")}</p>
-
-          <div class="property-tags mt-8">
-            <h3 class="text-lg font-bold mb-3">Amenities</h3>
-            <div class="flex flex-wrap gap-2">
-              ${(extras.amenities.length ? extras.amenities : (prop.amenities || []))
-                .map(a => `<span class="tag">${a.trim()}</span>`).join("")}
-            </div>
-          </div>
 
           ${bookingEmbed}
 

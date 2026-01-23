@@ -222,79 +222,130 @@ const renderPropertyDetail = async prop => {
   const extras = await fetchLodgifyExtras(prop.slug);
   const bookingUrl = ensureHttps(extras.calendar_embed_url);
 
-  const bookingEmbed = bookingUrl ? `
-    <div class="mt-8 border-t pt-6">
-      <div class="booking-card">
-        <div class="booking-card-header">
-          <h3>Check Availability</h3>
-          <p>Book direct • Best rates guaranteed</p>
-        </div>
+  // Booking section – header now moved outside the card
+  const bookingSection = bookingUrl ? `
+    <div class="mt-10 border-t border-gray-700 pt-8">
+      <!-- Standalone header -->
+      <div class="booking-header mb-6">
+        <h3 class="text-2xl md:text-3xl font-bold text-white">Check Availability & Book Direct</h3>
+        <p class="mt-2 text-slate-300 text-base">
+          Best rates guaranteed • No hidden fees • Instant confirmation
+        </p>
+      </div>
 
-        <div class="booking-card-body">
-          <iframe
-            src="${bookingUrl}"
-            title="Booking Calendar & Form"
-            loading="lazy"
-            allowfullscreen
-          ></iframe>
-        </div>
+      <!-- Clean iframe container -->
+      <div class="booking-iframe-container rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 bg-slate-900/30">
+        <iframe
+          src="${bookingUrl}"
+          title="Booking Calendar & Form"
+          loading="lazy"
+          allowfullscreen
+          class="w-full min-h-[700px] md:min-h-[800px] lg:min-h-[850px]"
+        ></iframe>
       </div>
     </div>
   ` : `
-    <div class="mt-8 border-t pt-6">
-      <h3 class="text-xl font-bold mb-4">Booking</h3>
-      <p class="text-gray-700">
-        Direct booking not available – contact us for reservations.
+    <div class="mt-10 border-t border-gray-700 pt-8">
+      <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Booking Information</h3>
+      <p class="text-slate-300 text-base">
+        Direct online booking not available at this time — please contact us for current availability and reservations.
       </p>
     </div>
   `;
 
   detailEl.innerHTML = `
-    <div class="property-hero">
+    <div class="property-hero max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <button
-        class="property-hero-media"
+        class="property-hero-media w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl relative group"
         type="button"
         id="openPhotosBtn"
         aria-label="View full photo gallery"
       >
         <img
           src="${cover}"
-          alt="${prop.title || "Property"}"
+          alt="${prop.title || "Property"} hero view"
           loading="eager"
-          width="800"
-          height="600"
+          width="1200"
+          height="675"
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div class="property-hero-badge">View Photos</div>
+        <div class="property-hero-badge absolute bottom-4 left-4 bg-black/60 backdrop-blur-md text-white px-5 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg">
+          <span>📸 View All Photos</span>
+        </div>
       </button>
 
-      <div class="property-hero-body">
-        <div class="property-hero-top">
+      <div class="property-hero-body mt-8 md:mt-10">
+        <div class="property-hero-top flex flex-col md:flex-row md:items-start md:justify-between gap-6">
           <div>
-            <h1 class="property-title">${prop.title || "Untitled Property"}</h1>
-            <p class="property-subtitle">${prop.subtitle || ""}</p>
+            <h1 class="property-title text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">${prop.title || "Untitled Property"}</h1>
+            <p class="property-subtitle mt-3 text-lg md:text-xl text-slate-300 font-medium">${prop.subtitle || ""}</p>
           </div>
-          <div class="property-hero-actions">
-            <button class="btn btn-ghost btn-small" id="sharePropertyBtn">
-              🔗 Share
+          <div class="property-hero-actions flex items-center gap-4">
+            <button class="btn btn-ghost btn-small px-5 py-2.5 text-sm font-semibold" id="sharePropertyBtn">
+              🔗 Share this property
             </button>
           </div>
         </div>
 
-        <p class="property-desc">
+        <!-- Quick Highlights -->
+        ${prop.highlights?.length ? `
+          <div class="property-highlights mt-6 flex flex-wrap gap-2.5">
+            ${prop.highlights.map(h => `
+              <span class="highlight-badge px-4 py-1.5 bg-blue-950/40 border border-blue-800/50 text-blue-200 rounded-full text-sm font-medium">
+                ${h}
+              </span>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- Description -->
+        <div class="property-desc mt-8 text-slate-300 leading-relaxed text-base">
           ${(prop.description || "").replace(/\n/g, "<br>")}
-        </p>
+        </div>
 
-        ${bookingEmbed}
+        <!-- Amenities -->
+        ${prop.amenities?.length ? `
+          <div class="amenities-section mt-10 pt-8 border-t border-gray-700">
+            <h3 class="text-2xl font-bold text-white mb-5">Amenities & Features</h3>
+            <ul class="amenities-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${prop.amenities.map(a => `
+                <li class="amenity-item bg-slate-900/40 border border-slate-700 rounded-xl p-4 text-slate-200">
+                  ${a}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
 
-        <div class="property-links mt-8 flex flex-wrap gap-3">
+        <!-- House Rules -->
+        ${prop.rules?.length ? `
+          <div class="rules-section mt-10 pt-8 border-t border-gray-700">
+            <h3 class="text-2xl font-bold text-white mb-5">House Rules</h3>
+            <ul class="rules-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${prop.rules.map(r => `
+                <li class="rule-item bg-slate-900/40 border border-slate-700 rounded-xl p-4 text-slate-300">
+                  ${r}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        <!-- Booking section (header now separate) -->
+        ${bookingSection}
+
+        <!-- Links -->
+        <div class="property-links mt-10 flex flex-wrap gap-4">
           ${(prop.links || [])
             .filter(l => l?.url && l.text)
             .map(link => {
               const href = ensureHttps(link.url);
-              const cls = link.style === "primary" ? " btn-primary" : " btn-ghost";
+              const cls = link.style === "primary" 
+                ? "bg-blue-600 hover:bg-blue-500 text-white" 
+                : "bg-slate-700 hover:bg-slate-600 text-white";
               return `
                 <a
-                  class="btn btn-small${cls}"
+                  class="btn px-6 py-3 rounded-lg font-semibold transition-colors ${cls}"
                   href="${href}"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -308,6 +359,7 @@ const renderPropertyDetail = async prop => {
     </div>
   `;
 
+  // Event listeners (unchanged)
   setImgFallback(detailEl.querySelector("img"));
 
   document
@@ -322,7 +374,7 @@ const renderPropertyDetail = async prop => {
         window.openPropertyModal(idx);
       }
     });
-  };
+};
 
 
   const setActiveChip = slug => {

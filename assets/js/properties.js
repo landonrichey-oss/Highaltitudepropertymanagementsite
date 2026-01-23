@@ -313,7 +313,5 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // ── Initialize ─────────────────────────────────────────────────────────────
-  window.renderPropertyGrid();   // Render thumbnails once
-
-  console.log(`Properties module loaded – ${properties.length} properties available`);
+  window.renderPropertyGrid(); 
 });

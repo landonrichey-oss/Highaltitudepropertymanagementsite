@@ -1,5 +1,4 @@
 // assets/js/hero.js
-// Full-page rotating featured background + footer reveal on scroll
 
 document.addEventListener("DOMContentLoaded", () => {
   const bgElement = document.getElementById("full-hero-bg");
@@ -35,13 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateHero();
 
-  interval = setInterval(updateHero, 2000);
-
-  // Pause on hover
-  document.querySelector(".hero-overlay")?.addEventListener("mouseenter", () => clearInterval(interval));
-  document.querySelector(".hero-overlay")?.addEventListener("mouseleave", () => {
-    interval = setInterval(updateHero, 2000);
-  });
+  interval = setInterval(updateHero, 3000);
 
   // Reveal footer after scrolling past hero (approx 80vh)
   window.addEventListener("scroll", () => {
@@ -54,5 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
     footer?.classList.add("visible");
   }
 
-  console.log(`Full-page hero started with ${featured.length} properties`);
 });

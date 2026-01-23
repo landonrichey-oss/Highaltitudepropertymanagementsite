@@ -40,6 +40,7 @@ window.allProperties = [
         description:
             "Escape to this detached 1-bedroom mountain condo, just 20 minutes from Park City. Enjoy your own private heated garage, private entrance, and private hot tub under the stars. Breathe in crisp alpine air, relax among towering trees, and soak in peaceful mountain views after days spent skiing, hiking, or exploring town. A cozy, secluded retreat with all the comforts you need, where wildlife wanders by and the stars feel close enough to touch.",
         amenities: ["Hot tub", "Heated garage parking", "Pool table", "Pinball machine", "Fast WiFi", "Basketball hoop"],
+        featured: true,
     },
 
     {

@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 6. Properties-specific logic
-    if (sectionId === "properties" && typeof window.renderPropertyPicker === "function") {
+    if (sectionId === "properties") {
       const url = new URL(window.location);
 
       // If coming from menu/nav and there's a ?property=, clear it to show gallery
@@ -79,8 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
         url.searchParams.delete("property");
         window.history.replaceState(null, "", url);
       }
-
-      window.renderPropertyPicker(); // show gallery by default
 
       // If we have a specific property slug (from URL or click), open detail view
       if (propertySlug && typeof window.showPropertyDetail === "function") {

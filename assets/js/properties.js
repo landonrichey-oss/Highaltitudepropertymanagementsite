@@ -1,5 +1,4 @@
 // assets/js/properties.js
-// Main logic for property picker, detail view, gallery rendering, and Lodgify integration
 
 document.addEventListener("DOMContentLoaded", () => {
   const properties = window.allProperties || [];
@@ -114,15 +113,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryView   = document.getElementById("gallery-view");
   const detailView    = document.getElementById("detail-view");
   const galleryGrid   = document.getElementById("gallery-grid");
-  const pickerEl      = document.getElementById("property-picker");
   const detailEl      = document.getElementById("property-detail");
-  const backBtn       = document.getElementById("back-to-gallery");
 
   // ── View Switching Helpers ─────────────────────────────────────────────────
   function showGallery() {
     if (galleryView) galleryView.style.display = "block";
     if (detailView)  detailView.style.display = "none";
-    if (backBtn)     backBtn.style.display = "none";
 
     // Clear detail to free memory
     if (detailEl) detailEl.innerHTML = "";
@@ -131,22 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showDetail() {
     if (galleryView) galleryView.style.display = "none";
     if (detailView)  detailView.style.display = "block";
-    if (backBtn)     backBtn.style.display = "inline-block";
   }
-
-  // ── Back button ────────────────────────────────────────────────────────────
-  backBtn?.addEventListener("click", () => {
-    const url = new URL(window.location);
-    const hash = url.hash.substring(1);
-    if (hash.includes("?")) {
-      url.hash = hash.split("?")[0];  // remove ?property=... from hash
-    }
-    url.searchParams.delete("property"); // also clear real search if present
-    window.history.replaceState(null, "", url);
-
-    showGallery();
-    document.getElementById("properties")?.scrollIntoView({ behavior: "smooth" });
-  });
 
   // ── Render Gallery Grid (thumbnails only) ──────────────────────────────────
   window.renderPropertyGrid = () => {
@@ -174,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
             height="300" 
           />
         </button>
-        <button type="button" class="gallery-overlay-link" data-slug="${prop.slug}">Details</button>
       `;
 
       const img = block.querySelector("img");
@@ -226,72 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       detailView.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  };
-
-  // ── Render Picker Chips ────────────────────────────────────────────────────
-  window.renderPropertyPicker = () => {
-    if (!pickerEl) return;
-
-    pickerEl.innerHTML = "";
-
-    properties.forEach(prop => {
-      if (!prop?.slug || !prop.title) return;
-
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "property-chip";
-      chip.dataset.slug = prop.slug;
-      chip.textContent = prop.title;
-
-      chip.addEventListener("click", () => {
-        const url = new URL(window.location);
-        url.hash = `properties?property=${encodeURIComponent(prop.slug)}`;
-        window.history.replaceState(null, "", url);
-
-        setActiveChip(prop.slug);
-        renderPropertyDetail(prop);
-      });
-
-      pickerEl.appendChild(chip);
-    });
-
-    document.getElementById("pickerTitle")?.addEventListener("click", () => {
-      pickerEl.scrollTo({ left: 0, behavior: "smooth" });
-    });
-
-    // Parse param from hash first, then search fallback
-    const url = new URL(window.location);
-    let slug = null;
-
-    // Hash format: #properties?property=slug
-    if (url.hash) {
-      const hashContent = url.hash.substring(1);
-      const parts = hashContent.split("?");
-      if (parts.length > 1) {
-        const hashParams = new URLSearchParams(parts[1]);
-        slug = hashParams.get("property");
-      }
-    }
-
-    // Fallback to real ?property=
-    if (!slug) {
-      slug = url.searchParams.get("property")?.trim();
-    }
-
-    if (slug) {
-      const prop = properties.find(p => p.slug === slug) ||
-                   properties.find(p => p.slug?.toLowerCase() === slug?.toLowerCase());
-      if (prop) {
-        setActiveChip(slug);
-        renderPropertyDetail(prop);
-        showDetail(); // force detail on direct link
-      } else {
-        console.warn(`Property not found for slug: ${slug}`);
-        showGallery();
-      }
-    } else {
-      showGallery();
-    }
   };
 
   // ── Render Property Detail ─────────────────────────────────────────────────
@@ -400,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ── Initialize ─────────────────────────────────────────────────────────────
   window.renderPropertyGrid();   // Render thumbnails once
-  window.renderPropertyPicker(); // Handle param + render chips
 
   console.log(`Properties module loaded – ${properties.length} properties available`);
 });

@@ -262,20 +262,13 @@
 
 /* Iframe Container – clean, modern look */
 .booking-iframe-container {
-  border-radius: 1.25rem;      /* 20px – slightly softer than 22px */
+  border-radius: 1.25rem;
+  background-color: whitesmoke;
   overflow: hidden;
   box-shadow: 
     0 10px 30px -5px rgba(0, 0, 0, 0.4),
     0 4px 12px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  transition: all 0.3s ease;
-}
-
-.booking-iframe-container:hover {
-  box-shadow: 
-    0 20px 50px -10px rgba(0, 0, 0, 0.5),
-    0 8px 20px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+    inset 0 0px 0 rgba(255, 255, 255, 0.04);
 }
 
 /* Iframe itself */

@@ -1,11 +1,13 @@
 // assets/js/navigation.js
-// Handles site navigation, mobile menu, section switching, back-to-top, and year update
+// Handles site navigation, mobile menu, section switching, back-to-top, year update, and hero visibility
 
 document.addEventListener("DOMContentLoaded", () => {
-  const sections   = document.querySelectorAll(".section");
-  const navLinks   = document.querySelectorAll(".nav-link, .brand");
-  const navToggle  = document.querySelector(".nav-toggle");
-  const siteNav    = document.getElementById("site-nav");
+  const sections    = document.querySelectorAll(".section");
+  const navLinks    = document.querySelectorAll(".nav-link");
+  const navToggle   = document.querySelector(".nav-toggle");
+  const siteNav     = document.getElementById("site-nav");
+  const heroOverlay = document.querySelector(".hero-overlay");
+  const fullHeroBg  = document.getElementById("full-hero-bg");
 
   // Mobile menu toggle
   navToggle?.addEventListener("click", () => {
@@ -32,39 +34,62 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year")?.replaceChildren(String(new Date().getFullYear()));
 
   function showSection(sectionId) {
-    // Show/hide sections
+    // 1. Toggle main sections
     sections.forEach(sec => {
-      sec.classList.toggle("active-section", sec.id === sectionId);
+      if (sec.id === sectionId) {
+        sec.classList.add("active-section");
+        sec.style.display = "flex";           // match your CSS
+      } else {
+        sec.classList.remove("active-section");
+        sec.style.display = "none";
+      }
     });
 
-    // Smooth scroll to the section
-    document.getElementById(sectionId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    // 2. Toggle hero overlay (only show on home)
+    if (heroOverlay) {
+      if (sectionId === "home") {
+        heroOverlay.style.display = "block";  // or "flex" if your hero uses flex
+        // Optional: fade in if you added transition in CSS
+        // heroOverlay.style.opacity = "1";
+      } else {
+        heroOverlay.style.display = "none";
+        // heroOverlay.style.opacity = "0";
+      }
+    }
 
-    // Update active navigation styling
-    document.querySelectorAll(".nav-link, .brand").forEach(el => {
+    // 3. Optional: toggle full-hero-bg active class (if it's hero-specific)
+    if (fullHeroBg) {
+      if (sectionId === "home") {
+        fullHeroBg.classList.add("active");
+      } else {
+        fullHeroBg.classList.remove("active");
+      }
+    }
+
+    // 4. Scroll to top (cleaner UX when switching sections)
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // 5. Update active navigation link
+    document.querySelectorAll(".nav-link").forEach(el => {
       el.classList.remove("active");
     });
 
     if (sectionId === "home") {
-      document.querySelector(".brand")?.classList.add("active");
       document.querySelector('.nav-link[data-section="home"]')?.classList.add("active");
     } else {
       document.querySelector(`.nav-link[data-section="${sectionId}"]`)?.classList.add("active");
     }
 
-    // Trigger dynamic content re-render when needed
+    // 6. Properties-specific logic
     if (sectionId === "properties" && typeof window.renderPropertyPicker === "function") {
-      // Clear any ?property= param when navigating via menu
+      // Clear ?property= param when navigating via menu
       const url = new URL(window.location);
       if (url.searchParams.has("property")) {
         url.searchParams.delete("property");
         window.history.replaceState(null, "", url);
       }
 
-      window.renderPropertyPicker();  // This will now show gallery by default
+      window.renderPropertyPicker();  // show gallery by default
     }
   }
 
@@ -80,19 +105,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Update URL hash (remove for home)
       const url = new URL(window.location);
-      url.hash = target === "home" ? "" : target;
+      url.hash = target === "home" ? "" : `#${target}`;
       window.history.pushState(null, "", url);
 
       showSection(target);
     });
   });
 
-  // Determine initial section
+  // Determine initial section from hash or default to home
   let initialSection = location.hash ? location.hash.substring(1).split("?")[0] : "home";
   if (initialSection === "") initialSection = "home";
 
-  // If ?property= exists AND we're not already in properties → force properties section
-  // But do NOT auto-open detail if coming from menu/brand — only if direct link or back/forward
+  // If ?property= exists → force properties section
   const params = new URLSearchParams(location.search);
   if (params.has("property") && initialSection !== "properties") {
     initialSection = "properties";
@@ -103,13 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSection(initialSection);
 
-  // Support browser back/forward buttons
+  // Browser back/forward support
   window.addEventListener("hashchange", () => {
     let newSection = location.hash ? location.hash.substring(1).split("?")[0] : "home";
     if (newSection === "") newSection = "home";
     showSection(newSection);
   });
 
-  // Expose showSection so other scripts can use it
+  // Expose for other scripts
   window.showSection = showSection;
 });

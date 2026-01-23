@@ -11,17 +11,12 @@
   <!-- CSS -->
   <link rel="stylesheet" href="assets/styles/main.css" />
 </head>
-
 <body>
-  <!-- HEADER / NAVIGATION -->
-  <header class="site-header">
+  <!-- Transparent fixed header -->
+  <header class="site-header transparent-header">
     <div class="container header-inner">
       <a class="brand" href="#home">
         <span class="brand-mark" aria-hidden="true">🏔️</span>
-        <span class="brand-text">
-          <strong>High Altitude Property Management</strong>
-          <small>Short-Term Rentals</small>
-        </span>
       </a>
 
       <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">
@@ -37,111 +32,51 @@
     </div>
   </header>
 
-  <main id="main">
-    <!-- HOME / HERO SECTION -->
-    <section id="home" class="section active-section">
-      <!-- HERO -->
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Park City • Mountain Stays • Year-Round Adventures</p>
-            <h1>Mountain getaways made easy.</h1>
-            <p class="lead">
-              Welcome to High Altitude Property Management — curated short-term rentals near Park City.
-              Explore the area, browse our properties, and book direct or via Airbnb/VRBO.
-            </p>
+  <!-- Full-page rotating featured background -->
+  <div class="full-hero-bg" id="full-hero-bg"></div>
 
-            <div class="hero-actions">
-              <a class="btn" href="#properties">Browse Properties</a>
-              <a class="btn btn-ghost" href="#contact">Ask a Question</a>
-            </div>
-
-            <div class="trust-row" aria-label="Highlights">
-              <div class="pill">⭐ Guest-ready</div>
-              <div class="pill">🛁 Hot tubs (select homes)</div>
-              <div class="pill">🚗 Close to town</div>
-            </div>
-          </div>
-
-          <!-- Inside .hero-grid, replace the entire .hero-card div with this -->
-          <div class="hero-card" role="region" aria-label="Featured properties carousel">
-          <div class="featured-carousel" id="featured-carousel">
-            <!-- Slides inserted by JS -->
-          </div>
+  <!-- Hero overlay content (top-left brand + bottom buttons) -->
+  <div class="hero-overlay">
+    <div class="container hero-content">
+      <!-- Top-left: Brand -->
+      <div class="hero-brand">
+        <div class="brand-text">
+          <strong>High Altitude Property Management</strong>
+          <small>Curated Short-Term Rentals Near Park City</small>
         </div>
-      </section>
-
-      <!-- WELCOME / AREA INFO -->
-      <section class="section section-alt" id="welcome">
-        <div class="container">
-          <div class="section-head">
-            <h2>Park City, Utah</h2>
-            <p class="muted">
-              World-class skiing, dining, shopping, and year-round mountain adventure — all within easy reach.
-            </p>
-          </div>
-
-          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-            <div class="card" style="padding:16px;">
-              <h3>Winter</h3>
-              <p class="muted">Skiing • Snowboarding • Snowmobiling • Sleigh rides • Cozy cabin nights</p>
-            </div>
-
-            <div class="card" style="padding:16px;">
-              <h3>Summer</h3>
-              <p class="muted">Hiking • Mountain biking • Lakes • Golf • Scenic drives • Festivals</p>
-            </div>
-
-            <div class="card" style="padding:16px;">
-              <h3>Close to It All</h3>
-              <p class="muted">Restaurants • Outlets • Woodward • Downtown Park City • Deer Valley</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- PROPERTIES SECTION -->
-    <section id="properties" class="section">
-  <div class="container">
-
-    <!-- Back button – hidden initially -->
-    <button id="back-to-gallery" class="btn btn-ghost mb-6" style="display: none;">
-      ← Back to all properties
-    </button>
-
-    <!-- Gallery view – visible by default -->
-    <div id="gallery-view">
-      <div class="gallery" id="gallery-grid"></div>
-    </div>
-
-    <!-- Detail view – hidden initially -->
-    <div id="detail-view" style="display: none;">
-      <div class="picker-bar">
-        <button id="pickerTitle" class="picker-title-btn" type="button">Properties</button>
-        <div id="property-picker" class="property-picker" aria-label="Property list"></div>
       </div>
-      <div id="property-detail" class="property-detail"></div>
-    </div>
 
+      <!-- Bottom center: Action buttons -->
+      <div class="hero-actions" id="hero-actions">
+        <!-- Dynamically filled by hero.js -->
+      </div>
+    </div>
   </div>
-</section>
 
-    <!-- GALLERY SECTION -->
-  <section id="properties-gallery" class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2>Properties</h2>
-        <p class="muted">Browse our collection — tap any photo to see full details and availability.</p>
+  <main id="main">
+    <!-- PROPERTIES SECTION (main content) -->
+    <section id="properties" class="section">
+      <div class="container">
+        <!-- Back button – hidden initially -->
+        <button id="back-to-gallery" class="btn btn-ghost mb-6" style="display: none;">
+          ← Back to all properties
+        </button>
+
+        <!-- Gallery view – visible by default -->
+        <div id="gallery-view">
+          <div class="gallery" id="gallery-grid"></div>
+        </div>
+
+        <!-- Detail view – hidden initially -->
+        <div id="detail-view" style="display: none;">
+          <div class="picker-bar">
+            <button id="pickerTitle" class="picker-title-btn" type="button">Properties</button>
+            <div id="property-picker" class="property-picker" aria-label="Property list"></div>
+          </div>
+          <div id="property-detail" class="property-detail"></div>
+        </div>
       </div>
-
-      <div class="gallery" id="gallery-grid"></div>
-
-      <div style="margin-top:18px;">
-        <a class="btn" href="#properties">View detailed listings</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="section">
@@ -183,8 +118,7 @@
 
             <label>
               Message
-              <textarea name="message" rows="5" required
-                placeholder="Dates, guest count, property questions, etc."></textarea>
+              <textarea name="message" rows="5" required placeholder="Dates, guest count, property questions, etc."></textarea>
             </label>
 
             <button class="btn" type="submit">Send message</button>
@@ -195,7 +129,7 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- Footer – hidden until scroll, then fixed at bottom -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year"></span> High Altitude Property Management. All rights reserved.</p>
@@ -215,7 +149,6 @@
       <button class="modal-close" type="button" aria-label="Close" data-close="true">✕</button>
 
       <div class="modal-media">
-        <!-- script.js replaces this with the slider -->
         <img id="modal-img" src="" alt="" />
       </div>
 
@@ -238,7 +171,6 @@
   <script src="assets/js/hero.js" defer></script>
   <script src="assets/js/modal.js" defer></script>
   <script src="assets/js/contact-form.js" defer></script>
-
 </body>
 
 </html>

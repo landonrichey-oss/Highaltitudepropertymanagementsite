@@ -16,7 +16,7 @@
   <!-- HEADER -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#">
+      <a class="brand" href="index.html">
         <span class="brand-mark" aria-hidden="true">🏔️</span>
         <span class="brand-text">
           <strong>High Altitude Property Management</strong>
@@ -30,7 +30,7 @@
       </button>
 
       <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="#properties">Properties</a>
+        <a href="properties.html">Properties</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact" class="btn btn-small">Contact</a>
       </nav>
@@ -45,11 +45,12 @@
           <p class="eyebrow">Park City • Mountain Stays • Year-Round Adventures</p>
           <h1>Mountain getaways made easy.</h1>
           <p class="lead">
-            Browse our short-term rentals, view photos, check amenities, and book directly through Airbnb/VRBO links.
+            Welcome to High Altitude Property Management — curated short-term rentals near Park City.
+            Explore the area, browse our properties, and book direct or via Airbnb/VRBO.
           </p>
 
           <div class="hero-actions">
-            <a class="btn" href="#properties">View Properties</a>
+            <a class="btn" href="properties.html">Browse Properties</a>
             <a class="btn btn-ghost" href="#contact">Ask a Question</a>
           </div>
 
@@ -66,28 +67,44 @@
           </div>
           <div class="hero-card-body">
             <h2>Quick tip</h2>
-            <p>Click “View details” for photos + amenities.</p>
-            <a class="btn btn-small" href="#properties">Browse stays</a>
+            <p>Tap any gallery photo below to open full details.</p>
+            <a class="btn btn-small" href="properties.html">Browse all stays</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROPERTIES -->
-    <section id="properties" class="section">
+    <!-- AREA / WELCOME INFO -->
+    <section class="section section-alt" id="welcome">
       <div class="container">
         <div class="section-head">
-          <h2>Properties</h2>
-          <p class="muted">Click “View details” to see photos, amenities, and booking links.</p>
+          <h2>Park City, Utah</h2>
+          <p class="muted">
+            World-class skiing, dining, shopping, and year-round mountain adventure — all within easy reach.
+          </p>
         </div>
 
-        <!-- IMPORTANT: script.js renders cards here -->
-        <div id="property-grid" class="grid"></div>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <div class="card" style="padding:16px;">
+            <h3>Winter</h3>
+            <p class="muted">Skiing • Snowboarding • Snowmobiling • Sleigh rides • Cozy cabin nights</p>
+          </div>
+
+          <div class="card" style="padding:16px;">
+            <h3>Summer</h3>
+            <p class="muted">Hiking • Mountain biking • Lakes • Golf • Scenic drives • Festivals</p>
+          </div>
+
+          <div class="card" style="padding:16px;">
+            <h3>Close to It All</h3>
+            <p class="muted">Restaurants • Outlets • Woodward • Downtown Park City • Deer Valley</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ✅ AUTO GALLERY (script.js renders ALL properties here) -->
-    <section id="gallery" class="section section-alt">
+    <section id="gallery" class="section">
       <div class="container">
         <div class="section-head">
           <h2>Gallery</h2>
@@ -95,6 +112,10 @@
         </div>
 
         <div class="gallery" id="gallery-grid"></div>
+
+        <div style="margin-top:18px;">
+          <a class="btn" href="properties.html">Browse all properties</a>
+        </div>
       </div>
     </section>
 
@@ -154,7 +175,7 @@
     <div class="container footer-inner">
       <p>© <span id="year"></span> High Altitude Property Management. All rights reserved.</p>
       <div class="footer-links">
-        <a href="#properties">Properties</a>
+        <a href="properties.html">Properties</a>
         <a href="#contact">Contact</a>
         <a href="#" id="back-to-top">Back to top ↑</a>
       </div>
@@ -184,24 +205,11 @@
     </div>
   </div>
 
-  <!-- ✅ FULLSCREEN SWIPE GALLERY OVERLAY -->
-  <div class="gallery-overlay" id="galleryOverlay" aria-hidden="true">
-    <button class="gallery-close" id="galleryClose" type="button" aria-label="Close fullscreen photos">✕</button>
-
-    <button class="gallery-nav prev" id="galleryPrev" type="button" aria-label="Previous photo">‹</button>
-    <button class="gallery-nav next" id="galleryNext" type="button" aria-label="Next photo">›</button>
-
-    <div class="gallery-viewport">
-      <div class="gallery-track" id="galleryTrack"></div>
-    </div>
-
-    <div class="gallery-dots" id="galleryDots" aria-label="Fullscreen slide dots"></div>
-  </div>
-
   <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 

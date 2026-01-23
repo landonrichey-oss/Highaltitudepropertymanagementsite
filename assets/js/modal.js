@@ -2,15 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("property-modal");
   if (!modal) return;
 
-  const modalTitle     = document.getElementById("modal-title");
-  const modalSubtitle  = document.getElementById("modal-subtitle");
-  const modalDesc      = document.getElementById("modal-description");
-  const modalAmenities = document.getElementById("modal-amenities");
-  const modalActions   = document.getElementById("modal-actions");
-  const modalMedia     = modal.querySelector(".modal-media");
+  const modalMedia = modal.querySelector(".modal-media");
 
-  let sliderIndex      = 0;
-  let sliderImages     = [];
+  let sliderIndex = 0;
+  let sliderImages = [];
   let currentPropIndex = -1;
 
   const properties = window.allProperties || [];
@@ -25,9 +20,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const IMG_BASE = "assets/images";
 
+  function getPropertyImages(prop) {
+    if (!prop || !prop.slug) return [FALLBACK_IMG];
+
+    const images = [];
+    let i = 1;
+    while (true) {
+      const imgPath = `${IMG_BASE}/${prop.slug}-${i}.jpg`;
+      if (i > 30) break;
+      images.push(imgPath);
+      i++;
+    }
+
+    return images.length > 0 ? images : [FALLBACK_IMG];
+  }
+
   const closeModal = () => {
     modal?.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    sliderImages = [];
+    sliderIndex = 0;
+    currentPropIndex = -1;
   };
 
   const buildSlider = (images, title) => {
@@ -37,9 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sliderIndex = 0;
 
     modalMedia.innerHTML = `
-      <div class="slider">
-        <button class="slider-share" type="button" aria-label="Share link" data-share="true">🔗</button>
-        <button class="slider-close" type="button" aria-label="Close" data-close="true">✕</button>
+      <div class="slider fullscreen-slider">
+        <button class="slider-close top-right" type="button" aria-label="Close gallery" data-close="true">✕</button>
         <button class="slider-btn prev" type="button" aria-label="Previous photo">‹</button>
         <div class="slider-viewport">
           <div class="slider-track"></div>
@@ -49,15 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    const track    = modalMedia.querySelector(".slider-track");
-    const dots     = modalMedia.querySelector(".slider-dots");
-    const prevBtn  = modalMedia.querySelector(".slider-btn.prev");
-    const nextBtn  = modalMedia.querySelector(".slider-btn.next");
-    const viewport = modalMedia.querySelector(".slider-viewport");
+    const track = modalMedia.querySelector(".slider-track");
+    const dots = modalMedia.querySelector(".slider-dots");
+    const prevBtn = modalMedia.querySelector(".slider-btn.prev");
+    const nextBtn = modalMedia.querySelector(".slider-btn.next");
 
     track.innerHTML = sliderImages.map((src, i) => `
       <div class="slide-wrap">
-        <img class="slide" draggable="false" src="${src}" alt="${title} photo ${i+1}" loading="lazy" />
+        <img class="slide" draggable="false" src="${src}" alt="${title || "Property"} photo ${i + 1}" loading="${i < 3 ? "eager" : "lazy"}" />
       </div>
     `).join("");
 
@@ -78,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const showControls = sliderImages.length > 1;
       prevBtn.style.display = showControls ? "flex" : "none";
       nextBtn.style.display = showControls ? "flex" : "none";
-      dots.style.display    = showControls ? "flex" : "none";
+      dots.style.display = showControls ? "flex" : "none";
     };
 
     const prev = () => {
@@ -103,47 +114,33 @@ document.addEventListener("DOMContentLoaded", () => {
       update();
     });
 
-    // Swipe support (omitted for brevity – copy from original if needed)
+    // Keyboard navigation
+    const handleKey = (e) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    modal.addEventListener("keydown", handleKey);
 
     update();
   };
 
-  window.openPropertyModal = async index => {
+  window.openPropertyModal = index => {
     const prop = properties[index];
     if (!prop || !modal) return;
 
     currentPropIndex = index;
 
-    modalTitle.textContent     = prop.title || "";
-    modalSubtitle.textContent  = prop.subtitle || "";
-    modalDesc.textContent      = prop.description || "";
-    modalDesc.style.whiteSpace = "pre-line";
-
-    modalAmenities.innerHTML = (prop.amenities || ["No amenities listed"]).map(a =>
-      `<span class="pill">${a}</span>`
-    ).join("");
-
-    modalActions.innerHTML = (prop.links || []).filter(l => l?.url).map(link => {
-      const extra = link.style === "primary" ? " btn-primary" : "";
-      const href  = link.url.startsWith("http") ? link.url : `https://${link.url}`;
-      return `<a href="${href}" target="_blank" rel="noopener" class="btn${extra}">${link.text}</a>`;
-    }).join("");
-
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
 
-    const cover = `${IMG_BASE}/${prop.slug}-1.jpg` || FALLBACK_IMG;
-    buildSlider([cover], prop.title || "Property");
-
-    // Optional: enhance with more images if you expose getPropertyImages
+    const allImages = getPropertyImages(prop);
+    buildSlider(allImages, prop.title || "Property");
   };
 
+  // Robust close handlers
   modal?.addEventListener("click", e => {
-    if (e.target.closest("[data-close]")) closeModal();
-
-    if (e.target.closest("[data-share]") && currentPropIndex >= 0) {
-      const prop = properties[currentPropIndex];
-      if (prop && window.copyShareLink) window.copyShareLink(prop.slug);
+    if (e.target === modal || e.target.closest("[data-close]")) {
+      closeModal();
     }
   });
 

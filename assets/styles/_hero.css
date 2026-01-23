@@ -26,24 +26,6 @@ body::before {
   pointer-events: none;
 }
 
-/* Transparent header over background */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: rgba(11, 18, 32, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  transition: background 0.4s ease;
-}
-
-.site-header.scrolled {
-  background: rgba(11, 18, 32, 0.92);
-}
-
 /* Hero content – top-left brand + bottom-center buttons */
 .hero-content {
   position: relative;

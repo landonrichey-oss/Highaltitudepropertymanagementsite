@@ -8,16 +8,14 @@
 
 /* Sections – base styling */
 .section {
-  padding-top: 80px;                 /* increased for better breathing room on desktop */
+  padding-top: 20px;                 /* increased for better breathing room on desktop */
   display: none;
   position: relative;
   z-index: 1;                      /* ensure sections appear above background */
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding-top: 60px;
-  }
+
 }
 
 @media (max-width: 480px) {

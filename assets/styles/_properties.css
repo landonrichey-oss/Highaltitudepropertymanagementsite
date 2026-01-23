@@ -129,18 +129,17 @@
   background: rgba(125,211,252,0.14);
 }
 
-/* Property Detail Layout */
-.property-detail {
-  margin-top: 16px;
-}
-
 .property-hero {
+  width: 85%;
+  margin: 0 auto;
   display: block;
   overflow: hidden;
 }
 
-@media (max-width: 900px) {
-
+@media (max-width: 600px) {
+  .property-hero {
+    width: 100%;
+  }
 }
 
 .property-hero-media {

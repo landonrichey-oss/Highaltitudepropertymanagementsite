@@ -4,11 +4,11 @@
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 20px;
 }
 
 /* Sections – base styling */
 .section {
-  padding-top: 20px;                 /* increased for better breathing room on desktop */
   display: none;
   position: relative;
   z-index: 1;                      /* ensure sections appear above background */

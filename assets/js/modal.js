@@ -57,12 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="slider-track"></div>
         </div>
         <button class="slider-btn next" type="button" aria-label="Next photo">›</button>
-        <div class="slider-dots" aria-label="Slide navigation"></div>
       </div>
     `;
 
     const track = modalMedia.querySelector(".slider-track");
-    const dots = modalMedia.querySelector(".slider-dots");
     const prevBtn = modalMedia.querySelector(".slider-btn.prev");
     const nextBtn = modalMedia.querySelector(".slider-btn.next");
 
@@ -76,20 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
       img.onerror = () => { img.src = FALLBACK_IMG; };
     });
 
-    dots.innerHTML = sliderImages.map((_, i) => `
-      <button class="slider-dot ${i === 0 ? "active" : ""}" type="button" data-dot="${i}"></button>
-    `).join("");
-
     const update = () => {
       track.style.transform = `translate3d(${-sliderIndex * 100}%, 0, 0)`;
-      dots.querySelectorAll(".slider-dot").forEach((d, i) =>
-        d.classList.toggle("active", i === sliderIndex)
-      );
 
       const showControls = sliderImages.length > 1;
       prevBtn.style.display = showControls ? "flex" : "none";
       nextBtn.style.display = showControls ? "flex" : "none";
-      dots.style.display = showControls ? "flex" : "none";
     };
 
     const prev = () => {
@@ -106,13 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevBtn.addEventListener("click", prev);
     nextBtn.addEventListener("click", next);
-
-    dots.addEventListener("click", e => {
-      const dot = e.target.closest("[data-dot]");
-      if (!dot) return;
-      sliderIndex = Number(dot.dataset.dot);
-      update();
-    });
 
     // Keyboard navigation
     const handleKey = (e) => {

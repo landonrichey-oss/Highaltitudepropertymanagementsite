@@ -1,0 +1,124 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 12, 18, 0.55);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.brand-mark {
+  font-size: 22px;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+
+.brand-text strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.1;
+}
+.brand-text small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.site-nav a {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.25px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.site-nav a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.nav-toggle {
+  display: none;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.burger {
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  display: block;
+  position: relative;
+}
+.burger::before,
+.burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.burger::before {
+  top: -6px;
+}
+.burger::after {
+  top: 6px;
+}
+
+/* Mobile nav */
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 64px;
+    width: calc(100% - 24px);
+    margin: 0 auto;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: rgba(10, 12, 18, 0.92);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .site-nav.open {
+    display: flex;
+  }
+
+  .site-nav a {
+    padding: 12px 12px;
+    border-radius: 14px;
+  }
+}

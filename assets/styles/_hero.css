@@ -1,0 +1,92 @@
+.hero {
+  padding: 66px 0 40px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  font-size: clamp(34px, 4.2vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.6px;
+}
+
+.hero-copy .lead {
+  margin: 12px 0 18px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0 16px;
+}
+
+.trust-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: var(--radius2);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hero-card-media img {
+  height: 220px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.hero-card-body {
+  padding: 16px;
+}
+
+.hero-card-body h2 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.hero-card-body p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 940px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}

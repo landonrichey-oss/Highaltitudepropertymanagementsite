@@ -13,8 +13,6 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
   <!-- HEADER / NAVIGATION -->
   <header class="site-header">
     <div class="container header-inner">
@@ -33,7 +31,7 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Primary">
         <a href="#home" class="nav-link" data-section="home">Home</a>
-        <a href="#properties-gallery" class="nav-link" data-section="properties-gallery">Properties</a>
+        <a href="#properties" class="nav-link" data-section="properties">Properties</a>
         <a href="#contact" class="nav-link btn btn-small" data-section="contact">Contact</a>
       </nav>
     </div>
@@ -72,7 +70,7 @@
             <div class="hero-card-body">
               <h2>Quick tip</h2>
               <p>Tap any gallery photo below to open full details.</p>
-              <a class="btn btn-small" href="#gallery">View Gallery</a>
+              <a class="btn btn-small" href="#properties">View Gallery</a>
             </div>
           </div>
         </div>
@@ -110,25 +108,29 @@
 
     <!-- PROPERTIES SECTION -->
     <section id="properties" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Browse Properties</h2>
-          <p class="muted">Select a property below — the link updates automatically so it’s easy to share.</p>
-        </div>
+  <div class="container">
 
-        <!-- Horizontal Property Selector -->
-        <div class="picker-bar">
-          <button id="pickerTitle" class="picker-title-btn" type="button" aria-label="Scroll properties">
-            Properties
-          </button>
+    <!-- Back button – hidden initially -->
+    <button id="back-to-gallery" class="btn btn-ghost mb-6" style="display: none;">
+      ← Back to all properties
+    </button>
 
-          <div id="property-picker" class="property-picker" aria-label="Property list"></div>
-        </div>
+    <!-- Gallery view – visible by default -->
+    <div id="gallery-view">
+      <div class="gallery" id="gallery-grid"></div>
+    </div>
 
-        <!-- Property detail renders here -->
-        <div id="property-detail" class="property-detail"></div>
+    <!-- Detail view – hidden initially -->
+    <div id="detail-view" style="display: none;">
+      <div class="picker-bar">
+        <button id="pickerTitle" class="picker-title-btn" type="button">Properties</button>
+        <div id="property-picker" class="property-picker" aria-label="Property list"></div>
       </div>
-    </section>
+      <div id="property-detail" class="property-detail"></div>
+    </div>
+
+  </div>
+</section>
 
     <!-- GALLERY SECTION -->
   <section id="properties-gallery" class="section">
@@ -235,6 +237,7 @@
 
   <!-- SCRIPTS -->
   <script src="assets/js/properties-data.js" defer></script>
+  <script src="assets/js/utils.js" defer></script>
   <script src="assets/js/navigation.js" defer></script>
   <script src="assets/js/properties.js" defer></script>
   <script src="assets/js/modal.js" defer></script>

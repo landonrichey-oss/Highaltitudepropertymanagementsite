@@ -1,0 +1,266 @@
+/* Properties section, picker, detail + Gallery */
+
+/* Gallery Grid */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+@media (max-width: 1000px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+@media (max-width: 740px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+@media (max-width: 460px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* Gallery Block */
+.gallery-block {
+  position: relative;
+  border-radius: var(--radius2, 12px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.gallery-block:hover,
+.gallery-block:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* Image container – reserves space + placeholder */
+.gallery-item {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;                   /* Adjust this ratio to match your typical photo proportions (e.g. 3/4 for portrait) */
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(20, 25, 40, 0.6);     /* Subtle dark placeholder while loading */
+  position: relative;
+}
+
+/* Image itself – absolute to fill reserved space, starts hidden */
+.gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+
+/* Fade in when loaded */
+.gallery-item img.loaded {
+  opacity: 1;
+}
+
+/* Hover/focus effect */
+.gallery-block:hover .gallery-item img,
+.gallery-block:focus-within .gallery-item img {
+  transform: scale(1.08);
+  filter: brightness(1.05);
+}
+
+/* Overlay "Details" button */
+.gallery-overlay-link {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(15,18,25,0.65);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.gallery-overlay-link:hover,
+.gallery-overlay-link:focus {
+  background: rgba(30,35,45,0.85);
+  transform: translateY(-1px);
+}
+
+/* Picker Bar */
+.picker-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.picker-title-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+  padding: 10px 14px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.picker-title-btn:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+.property-picker {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 4px;
+  scrollbar-width: thin;
+}
+
+.property-picker::-webkit-scrollbar {
+  height: 10px;
+}
+.property-picker::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
+}
+
+/* Property Chips */
+.property-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.property-chip:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+.property-chip.active {
+  border-color: rgba(125,211,252,0.7);
+  background: rgba(125,211,252,0.14);
+}
+
+/* Property Detail Layout */
+.property-detail {
+  margin-top: 16px;
+}
+
+.property-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .property-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.property-hero-media {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: #05080f;
+  cursor: pointer;
+}
+
+.property-hero-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+}
+
+.property-hero-badge {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(10,12,18,0.55);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 8px 12px;
+}
+
+.property-hero-body {
+  padding: 16px;
+}
+
+.property-hero-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.property-title {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+}
+
+.property-subtitle {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.property-desc {
+  margin: 14px 0 0;
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.property-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.property-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}

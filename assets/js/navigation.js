@@ -1,8 +1,11 @@
+// assets/js/navigation.js
+// Handles site navigation, mobile menu, section switching, back-to-top, and year update
+
 document.addEventListener("DOMContentLoaded", () => {
-  const sections = document.querySelectorAll(".section");
-  const navLinks = document.querySelectorAll(".nav-link, .brand");
-  const navToggle = document.querySelector(".nav-toggle");
-  const siteNav = document.getElementById("site-nav");
+  const sections   = document.querySelectorAll(".section");
+  const navLinks   = document.querySelectorAll(".nav-link, .brand");
+  const navToggle  = document.querySelector(".nav-toggle");
+  const siteNav    = document.getElementById("site-nav");
 
   // Mobile menu toggle
   navToggle?.addEventListener("click", () => {
@@ -11,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     siteNav?.classList.toggle("open");
   });
 
-  // Close mobile menu when any nav link is clicked
+  // Close mobile menu when a nav link is clicked
   navLinks.forEach(link => {
     link.addEventListener("click", () => {
       navToggle?.setAttribute("aria-expanded", "false");
@@ -20,70 +23,62 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Back to top
-  document.getElementById("back-to-top")?.addEventListener("click", (e) => {
+  document.getElementById("back-to-top")?.addEventListener("click", e => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  // Copyright year
+  // Set current year in footer
   document.getElementById("year")?.replaceChildren(String(new Date().getFullYear()));
 
-  // Safe access to properties array (used only for existence check if needed)
-  const properties = Array.isArray(window.allProperties) ? window.allProperties : [];
-
   function showSection(sectionId) {
-    // Normalize legacy "gallery" → "properties-gallery"
-    if (sectionId === "gallery") {
-      sectionId = "properties-gallery";
-    }
-
+    // Show/hide sections
     sections.forEach(sec => {
       sec.classList.toggle("active-section", sec.id === sectionId);
     });
 
-    const targetElement = document.getElementById(sectionId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    // Smooth scroll to the section
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 
-    // Update active nav states
-    document.querySelectorAll(".nav-link, .brand").forEach(l => l.classList.remove("active"));
+    // Update active navigation styling
+    document.querySelectorAll(".nav-link, .brand").forEach(el => {
+      el.classList.remove("active");
+    });
 
     if (sectionId === "home") {
       document.querySelector(".brand")?.classList.add("active");
       document.querySelector('.nav-link[data-section="home"]')?.classList.add("active");
     } else {
-      const matchingLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
-      if (matchingLink) {
-        matchingLink.classList.add("active");
+      document.querySelector(`.nav-link[data-section="${sectionId}"]`)?.classList.add("active");
+    }
+
+    // Trigger dynamic content re-render when needed
+    if (sectionId === "properties" && typeof window.renderPropertyPicker === "function") {
+      // Clear any ?property= param when navigating via menu
+      const url = new URL(window.location);
+      if (url.searchParams.has("property")) {
+        url.searchParams.delete("property");
+        window.history.replaceState(null, "", url);
       }
-    }
 
-    // Re-render dynamic content for visible sections
-    if (sectionId === "properties" && typeof renderPropertyPicker === "function") {
-      renderPropertyPicker();
-    }
-
-    if (sectionId === "properties-gallery" && typeof renderGalleryLinks === "function") {
-      renderGalleryLinks();
+      window.renderPropertyPicker();  // This will now show gallery by default
     }
   }
 
-  // Navigation click handling
+  // Handle navigation link clicks
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       const href = link.getAttribute("href");
       if (!href?.startsWith("#")) return;
 
       e.preventDefault();
-      let target = href.substring(1) || "home";
 
-      // Normalize legacy gallery link
-      if (target === "gallery") {
-        target = "properties-gallery";
-      }
+      const target = href.substring(1) || "home";
 
-      // Update URL (remove hash for home, otherwise set it)
+      // Update URL hash (remove for home)
       const url = new URL(window.location);
       url.hash = target === "home" ? "" : target;
       window.history.pushState(null, "", url);
@@ -93,15 +88,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Determine initial section
-  let initialSection = location.hash ? location.hash.substring(1).split('?')[0] : "home";
+  let initialSection = location.hash ? location.hash.substring(1).split("?")[0] : "home";
   if (initialSection === "") initialSection = "home";
 
-  // Handle legacy #gallery hash
-  if (initialSection === "gallery") {
-    initialSection = "properties-gallery";
-  }
-
-  // If ?property= is present without hash → force properties section
+  // If ?property= exists AND we're not already in properties → force properties section
+  // But do NOT auto-open detail if coming from menu/brand — only if direct link or back/forward
   const params = new URLSearchParams(location.search);
   if (params.has("property") && initialSection !== "properties") {
     initialSection = "properties";
@@ -112,20 +103,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSection(initialSection);
 
-  // Handle browser back/forward (hashchange)
+  // Support browser back/forward buttons
   window.addEventListener("hashchange", () => {
-    let newSection = location.hash ? location.hash.substring(1).split('?')[0] : "home";
-
-    // Legacy support
-    if (newSection === "gallery") {
-      newSection = "properties-gallery";
-    }
-
+    let newSection = location.hash ? location.hash.substring(1).split("?")[0] : "home";
     if (newSection === "") newSection = "home";
-
     showSection(newSection);
   });
 
-  // Expose showSection globally so script.js (gallery clicks, etc.) can use it
+  // Expose showSection so other scripts can use it
   window.showSection = showSection;
 });

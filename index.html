@@ -244,7 +244,16 @@
     const sections = document.querySelectorAll('.section');
     const navLinks = document.querySelectorAll('.nav-link, .brand');
 
+    // Safely get properties from properties-data.js
+    const properties = Array.isArray(window.allProperties) ? window.allProperties : [];
+
+    if (properties.length === 0) {
+      console.warn("No properties loaded – check properties-data.js syntax and load order");
+    }
+
     function showSection(sectionId) {
+      console.log("Switching to section:", sectionId); // debug
+
       sections.forEach(sec => {
         sec.classList.toggle('active-section', sec.id === sectionId);
       });
@@ -253,10 +262,11 @@
 
       // Re-render dynamic content
       if (sectionId === 'properties') {
+        console.log("Rendering properties section – properties count:", properties.length);
         if (typeof renderPropertyPicker === 'function') {
-          renderPropertyPicker();           // rebuild chips + auto-select from URL
+          renderPropertyPicker();           // rebuild chips + auto-select
         }
-        loadPropertyFromUrl();              // ← important: apply ?property= param
+        loadPropertyFromUrl();              // apply ?property= param
       }
       if (sectionId === 'gallery') {
         if (typeof renderGalleryLinks === 'function') {
@@ -265,28 +275,25 @@
       }
     }
 
-    // NEW: Load specific property from ?property= param
     function loadPropertyFromUrl() {
       const params = new URLSearchParams(window.location.search);
       const slug = params.get("property")?.trim();
 
-      if (!slug) return;
+      if (!slug || properties.length === 0) return;
 
-      const prop = properties.find(p => p.slug === slug) ||
-        properties.find(p => p.slug.toLowerCase() === slug.toLowerCase());
+      const prop = properties.find(p => p?.slug === slug) ||
+        properties.find(p => p?.slug?.toLowerCase() === slug.toLowerCase());
 
       if (prop && typeof renderPropertyDetail === 'function') {
-        // Make sure chips reflect the active one
+        console.log("Loading property from URL param:", prop.slug); // debug
         if (typeof setActiveChip === 'function') {
           setActiveChip(prop.slug);
         }
         renderPropertyDetail(prop);
-        // Scroll to the detail area
         document.getElementById("property-detail")?.scrollIntoView({ behavior: "smooth" });
       }
     }
 
-    // Click handler for nav links
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
         const href = link.getAttribute('href');
@@ -303,21 +310,22 @@
       });
     });
 
-    // Handle initial page load (hash + possible query param)
+    // Initial load
     let initialSection = 'home';
     if (location.hash) {
       initialSection = location.hash.substring(1).split('?')[0] || 'home';
     }
     showSection(initialSection);
 
-    // If we landed directly on properties with a param, make sure detail loads
+    // Handle direct load with param
     if (initialSection === 'properties' || location.search.includes('property=')) {
       setTimeout(() => {
+        console.log("Initial param check");
         loadPropertyFromUrl();
-      }, 150); // slightly longer delay to ensure DOM + renderPropertyPicker has run
+      }, 250);
     }
 
-    // Also listen for hash changes (browser back/forward or manual hash change)
+    // Hash change (back/forward)
     window.addEventListener('hashchange', () => {
       const newSection = location.hash.substring(1).split('?')[0] || 'home';
       showSection(newSection);

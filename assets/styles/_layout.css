@@ -1,3 +1,13 @@
+/* Dark overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(11,18,32,0.6) 0%, rgba(11,18,32,0.5) 40%, rgba(11,18,32,0.85) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* Container – centered content with safe margins */
 .container {
   width: min(var(--container, 1100px), calc(100% - 40px));

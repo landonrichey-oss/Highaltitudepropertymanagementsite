@@ -238,69 +238,92 @@
   <script src="assets/js/properties-data.js"></script>
   <script src="assets/js/script.js" defer></script>
 
-  <!-- SECTION SWITCHING LOGIC -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('.section');
-      const navLinks = document.querySelectorAll('.nav-link, .brand');
+<!-- SECTION SWITCHING LOGIC -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-link, .brand');
 
-      function showSection(sectionId) {
-        sections.forEach(sec => {
-          sec.classList.toggle('active-section', sec.id === sectionId);
-        });
-
-        // Optional: scroll to the section
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        // Re-render dynamic content when switching tabs
-        if (sectionId === 'properties') {
-          // Call your properties rendering function (defined in script.js)
-          if (typeof renderPropertyPicker === 'function') {
-            renderPropertyPicker();
-          }
-        }
-        if (sectionId === 'gallery') {
-          if (typeof renderGalleryLinks === 'function') {
-            renderGalleryLinks();
-          }
-        }
-      }
-
-      // Click handler for nav links
-      navLinks.forEach(link => {
-        link.addEventListener('click', e => {
-          const href = link.getAttribute('href');
-          if (href.startsWith('#')) {
-            e.preventDefault();
-            const target = href.substring(1);
-            showSection(target);
-
-            // Update active style
-            navLinks.forEach(l => l.classList.remove('active'));
-            if (link.classList.contains('nav-link')) {
-              link.classList.add('active');
-            }
-          }
-        });
+    function showSection(sectionId) {
+      sections.forEach(sec => {
+        sec.classList.toggle('active-section', sec.id === sectionId);
       });
 
-      // Handle initial load + hash / query params
-      let initialSection = 'home';
-      if (location.hash) {
-        initialSection = location.hash.substring(1).split('?')[0] || 'home';
-      }
-      showSection(initialSection);
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // If there's a ?property=... param and we're on properties, trigger render
-      if (initialSection === 'properties' || location.search.includes('property=')) {
-        setTimeout(() => {
-          if (typeof renderPropertyPicker === 'function') {
-            renderPropertyPicker();
-          }
-        }, 100); // small delay to ensure DOM is ready
+      // Re-render dynamic content
+      if (sectionId === 'properties') {
+        if (typeof renderPropertyPicker === 'function') {
+          renderPropertyPicker();           // rebuild chips + auto-select from URL
+        }
+        loadPropertyFromUrl();              // ← important: apply ?property= param
       }
+      if (sectionId === 'gallery') {
+        if (typeof renderGalleryLinks === 'function') {
+          renderGalleryLinks();
+        }
+      }
+    }
+
+    // NEW: Load specific property from ?property= param
+    function loadPropertyFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("property")?.trim();
+
+      if (!slug) return;
+
+      const prop = properties.find(p => p.slug === slug) ||
+        properties.find(p => p.slug.toLowerCase() === slug.toLowerCase());
+
+      if (prop && typeof renderPropertyDetail === 'function') {
+        // Make sure chips reflect the active one
+        if (typeof setActiveChip === 'function') {
+          setActiveChip(prop.slug);
+        }
+        renderPropertyDetail(prop);
+        // Scroll to the detail area
+        document.getElementById("property-detail")?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Click handler for nav links
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href?.startsWith('#')) {
+          e.preventDefault();
+          const target = href.substring(1);
+          showSection(target);
+
+          navLinks.forEach(l => l.classList.remove('active'));
+          if (link.classList.contains('nav-link')) {
+            link.classList.add('active');
+          }
+        }
+      });
     });
-  </script>
+
+    // Handle initial page load (hash + possible query param)
+    let initialSection = 'home';
+    if (location.hash) {
+      initialSection = location.hash.substring(1).split('?')[0] || 'home';
+    }
+    showSection(initialSection);
+
+    // If we landed directly on properties with a param, make sure detail loads
+    if (initialSection === 'properties' || location.search.includes('property=')) {
+      setTimeout(() => {
+        loadPropertyFromUrl();
+      }, 150); // slightly longer delay to ensure DOM + renderPropertyPicker has run
+    }
+
+    // Also listen for hash changes (browser back/forward or manual hash change)
+    window.addEventListener('hashchange', () => {
+      const newSection = location.hash.substring(1).split('?')[0] || 'home';
+      showSection(newSection);
+    });
+  });
+</script>
 
   <!-- Add this to main.css if not already present -->
   <style>

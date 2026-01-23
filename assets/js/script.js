@@ -300,32 +300,46 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Landing gallery
   // =============================
-  const renderGalleryLinks = () => {
-    const grid = document.getElementById("gallery-grid");
-    if (!grid) return;
-    grid.innerHTML = "";
+  function renderGalleryLinks() {
+    const galleryGrid = document.getElementById("gallery-grid");
+    if (!galleryGrid) return;
 
-    properties.forEach(prop => {
+    galleryGrid.innerHTML = "";
+
+    properties.forEach((prop) => {
       const cover = getCoverImage(prop);
+
       const block = document.createElement("div");
       block.className = "gallery-block";
       block.innerHTML = `
-        <button type="button" class="gallery-item" data-go="${prop.slug}" aria-label="Open ${prop.title || "property"}">
-          <img src="${cover}" alt="${prop.title || "Property"}" loading="lazy" />
-        </button>
-        <button type="button" class="gallery-overlay-link" data-go="${prop.slug}">View Details</button>
-      `;
+      <button type="button" class="gallery-item" data-go="${prop.slug}" aria-label="View ${prop.title || "property"}">
+        <img src="${cover}" alt="${prop.title || "Property"}" loading="lazy" />
+      </button>
+      <button type="button" class="gallery-overlay-link" data-go="${prop.slug}">View Details</button>
+    `;
+
       setImgFallback(block.querySelector("img"));
-      grid.appendChild(block);
+      galleryGrid.appendChild(block);
     });
 
-    grid.addEventListener("click", e => {
+    galleryGrid.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-go]");
-      if (btn) {
-        location.href = `properties.html?property=${encodeURIComponent(btn.dataset.go)}`;
-      }
+      if (!btn) return;
+
+      const slug = btn.dataset.go;
+
+      // Switch to Properties tab + select this property
+      window.location.hash = 'properties';
+      window.location.search = '?property=' + encodeURIComponent(slug);
+
+      // Optional: force immediate render (in case hash change is slow)
+      setTimeout(() => {
+        if (typeof renderPropertyPicker === 'function') {
+          renderPropertyPicker();
+        }
+      }, 50);
     });
-  };
+  }
 
   renderGalleryLinks();
 

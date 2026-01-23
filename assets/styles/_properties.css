@@ -107,46 +107,6 @@
   transform: translateY(-1px);
 }
 
-/* Picker Bar */
-.picker-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 14px 0 18px;
-}
-
-.picker-title-btn {
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.92);
-  padding: 10px 14px;
-  font-weight: 800;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.picker-title-btn:hover {
-  background: rgba(255,255,255,0.10);
-}
-
-.property-picker {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 8px 4px;
-  scrollbar-width: thin;
-}
-
-.property-picker::-webkit-scrollbar {
-  height: 10px;
-}
-.property-picker::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.12);
-  border-radius: 999px;
-}
-
 /* Property Chips */
 .property-chip {
   border-radius: 999px;
@@ -175,9 +135,7 @@
 }
 
 .property-hero {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 18px;
+  display: block;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
   border-radius: 22px;
@@ -185,9 +143,7 @@
 }
 
 @media (max-width: 900px) {
-  .property-hero {
-    grid-template-columns: 1fr;
-  }
+
 }
 
 .property-hero-media {

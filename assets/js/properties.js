@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const utils = window.utils || {};
   const {
     FALLBACK_IMG,
-    IMG_BASE,
     ensureHttps,
     setImgFallback,
     getCoverImage,
@@ -228,9 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
             loading="lazy"
           ></iframe>
         </div>
-        <p class="text-sm text-gray-600 mt-4">
-          Complete your booking right here – no leaving the site!
-        </p>
       </div>
     ` : `
       <div class="mt-8 border-t pt-6">

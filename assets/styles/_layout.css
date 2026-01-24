@@ -8,12 +8,10 @@ body::before {
   pointer-events: none;
 }
 
-/* Container – centered content with safe margins */
+/* Container */
 .container {
   width: min(var(--container, 1100px), calc(100% - 40px));
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
   padding-top: 20px;
 }
 

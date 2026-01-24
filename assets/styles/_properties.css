@@ -107,7 +107,7 @@
   padding: 8px 12px;
 }
 
-.property-hero-body { padding: 16px; }
+.property-hero-body { padding: 16px 0; }
 
 .property-hero-top {
   display: flex;
@@ -137,7 +137,7 @@
 }
 
 /* ─────────────────────────────────────────────
-   Highlights (unchanged – already good)
+   Highlights
    ───────────────────────────────────────────── */
 .property-highlights {
   display: flex;
@@ -165,6 +165,12 @@
   border-color: rgba(59, 130, 246, 0.6);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+@media (max-width: 720px) {
+.property-highlights {
+  display: none;
+}
 }
 
 /* ─────────────────────────────────────────────
@@ -275,27 +281,15 @@
 .booking-iframe-container iframe {
   display: block;
   width: 100%;
-  min-height: 720px;           /* slightly reduced base height */
+  min-height: 500px;
   border: none;
   background: transparent;
-}
-
-/* Responsive height adjustments */
-@media (max-width: 1024px) {
-  .booking-iframe-container iframe {
-    min-height: 800px;
-  }
-}
-
-@media (max-width: 768px) {
-  .booking-iframe-container iframe {
-    min-height: 900px;
-  }
 }
 
 @media (max-width: 480px) {
   .booking-iframe-container {
     border-radius: 1rem;       /* 16px on small screens */
+    width: 100%;
   }
   
   .booking-header h3 {
@@ -303,6 +297,6 @@
   }
   
   .booking-iframe-container iframe {
-    min-height: 1000px;        /* taller on mobile to avoid cramped feel */
+    min-height: 700px;
   }
 }

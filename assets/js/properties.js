@@ -284,6 +284,16 @@ const renderPropertyDetail = async prop => {
             <button class="btn btn-ghost btn-small px-5 py-2.5 text-sm font-semibold" id="sharePropertyBtn">
               🔗 Share this property
             </button>
+            
+            ${bookingUrl ? `
+              <button 
+                class="btn btn-primary px-6 py-2.5 text-sm font-semibold" 
+                id="bookNowBtn"
+                aria-label="Scroll to booking section"
+              >
+                📅 Book Now
+              </button>
+            ` : ''}
           </div>
         </div>
 
@@ -331,33 +341,41 @@ const renderPropertyDetail = async prop => {
           </div>
         ` : ''}
 
+        ${prop.location ? `
+        <div class="location-section mt-10 pt-8 border-t border-gray-700">
+          <h3 class="text-2xl font-bold text-white mb-5">Location</h3>
+          <div class="map-container rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 bg-slate-900/30">
+            <iframe
+              class="w-full h-[450px] md:h-[500px]"
+              style="border:0;"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA8vhjnZ_rRfjM_VAp9947XzyrkYSlfpLY&q=${encodeURIComponent(prop.location)}&zoom=15"
+            ></iframe>
+          </div>
+          <p class="mt-3 text-slate-400 text-sm italic">${prop.location}</p>
+        </div>
+      ` : ''}
+
         <!-- Booking section (header now separate) -->
         ${bookingSection}
-
-        <!-- Links -->
-        <div class="property-links mt-10 flex flex-wrap gap-4">
-          ${(prop.links || [])
-            .filter(l => l?.url && l.text)
-            .map(link => {
-              const href = ensureHttps(link.url);
-              const cls = link.style === "primary" 
-                ? "bg-blue-600 hover:bg-blue-500 text-white" 
-                : "bg-slate-700 hover:bg-slate-600 text-white";
-              return `
-                <a
-                  class="btn px-6 py-3 rounded-lg font-semibold transition-colors ${cls}"
-                  href="${href}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ${link.text}
-                </a>
-              `;
-            }).join("")}
-        </div>
+        
       </div>
     </div>
   `;
+
+  const bookNowBtn = document.getElementById("bookNowBtn");
+  const bookingHeader = detailEl.querySelector(".booking-header"); // targets the <div class="booking-header mb-6">
+
+  if (bookNowBtn && bookingHeader) {
+    bookNowBtn.addEventListener("click", () => {
+      bookingHeader.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start"       // aligns to top of viewport
+      });
+    });
+  }
 
   // Event listeners (unchanged)
   setImgFallback(detailEl.querySelector("img"));
@@ -375,7 +393,6 @@ const renderPropertyDetail = async prop => {
       }
     });
 };
-
 
   const setActiveChip = slug => {
     document.querySelectorAll(".property-chip").forEach(btn =>

@@ -300,3 +300,69 @@
     min-height: 700px;
   }
 }
+
+/* ─────────────────────────────────────────────
+   Location Map Section
+   ───────────────────────────────────────────── */
+.location-section {
+  padding-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}
+
+.location-section h3 {
+  font-size: 1.5rem;          /* matches amenities/rules */
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.25rem;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1.25rem;     /* 20px – matches booking */
+  background: rgba(30, 41, 59, 0.4);  /* subtle dark fallback if iframe slow */
+  border: 1px solid rgba(59, 130, 246, 0.15);  /* light blue tint like amenities */
+  box-shadow: 
+    0 10px 30px -5px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Classic responsive iframe technique – maintains aspect ratio */
+.map-container::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;          /* 16:9 = 56.25% – good default for maps */
+  /* Alternatives: 75% = 4:3, 66.67% = 3:2, 100% = 1:1 square */
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Optional: taller on larger screens, or different ratio */
+@media (min-width: 768px) {
+  .map-container::before {
+    padding-top: 50%;           /* slightly shorter/wider feel on desktop */
+  }
+}
+
+@media (max-width: 640px) {
+  .map-container {
+    border-radius: 1rem;        /* 16px on mobile */
+  }
+}
+
+/* Small text below map showing full address */
+.location-section p {
+  margin-top: 1rem;
+  color: #94a3b8;               /* slate-400 */
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-style: italic;
+}

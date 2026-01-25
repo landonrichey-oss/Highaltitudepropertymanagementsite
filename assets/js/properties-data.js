@@ -55,7 +55,7 @@ window.allProperties = [
         securityDeposit: "$500 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
         featured: true,
-        // ── Added Reviews Section Data ───────────────────────────────────────
+        // ── Reviews ───────────────────────────────────────
         overallRating: 4.96,
         reviewCount: 68,
         airbnbUrl: "https://www.airbnb.com/rooms/720956", // Optional – replace with real Airbnb room ID/URL if cross-listed; omit if not needed

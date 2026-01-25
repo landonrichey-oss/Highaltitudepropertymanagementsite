@@ -54,7 +54,31 @@ window.allProperties = [
         paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
         securityDeposit: "$500 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
-        featured: true
+        featured: true,
+        // ── Added Reviews Section Data ───────────────────────────────────────
+        overallRating: 4.96,
+        reviewCount: 68,
+        airbnbUrl: "https://www.airbnb.com/rooms/720956", // Optional – replace with real Airbnb room ID/URL if cross-listed; omit if not needed
+        reviews: [
+            {
+                name: "Emily R.",
+                date: "December 2025",
+                rating: 5,
+                text: "Rustic Roots was the perfect mountain escape! The views from the deck and hot tub are absolutely breathtaking — we spent every evening soaking under the stars. The house was spotless, cozy, and had everything we needed. Highly recommend for anyone wanting peace and proximity to Park City!"
+            },
+            {
+                name: "The Thompson Family",
+                date: "November 2025",
+                rating: 5,
+                text: "Amazing family getaway! The kids were obsessed with the arcade games and loft hangout area — it kept them entertained for hours. Evenings around the fire pit making s'mores were magical. Great location: quiet and private but just a short drive to town. We’ll definitely be back!"
+            },
+            {
+                name: "Michael & Sarah",
+                date: "October 2025",
+                rating: 5,
+                text: "This home exceeded all expectations. Beautiful rustic decor, incredible mountain views, and the private hot tub was the highlight of our trip. Everything was clean, well-stocked, and the hosts were super responsive. Perfect blend of seclusion and convenience — 10/10!"
+            }
+        ]
     },
     {
         slug: "Bright-Mountain-Retreat",

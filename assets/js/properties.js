@@ -358,6 +358,45 @@ const renderPropertyDetail = async prop => {
         </div>
       ` : ''}
 
+              <!-- Guest Reviews -->
+        ${prop.reviews?.length ? `
+          <div class="reviews-section mt-10 pt-8 border-t border-gray-700">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="text-2xl font-bold text-white">Guest Reviews</h3>
+              ${prop.airbnbUrl ? `
+                <a href="${prop.airbnbUrl}" target="_blank" rel="noopener" class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-2">
+                  View all on Airbnb <span>↗</span>
+                </a>
+              ` : ''}
+            </div>
+
+            ${prop.overallRating ? `
+              <div class="mb-6 flex items-center gap-3">
+                <div class="text-3xl font-bold text-yellow-400">${prop.overallRating} ★</div>
+                <div class="text-slate-300">
+                  <span class="font-medium">${prop.reviewCount || ''} reviews</span>
+                  ${prop.airbnbUrl ? '<span class="text-sm"> on Airbnb</span>' : ''}
+                </div>
+              </div>
+            ` : ''}
+
+            <div class="reviews-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              ${prop.reviews.map(review => `
+                <div class="review-card bg-slate-900/40 border border-slate-700 rounded-xl p-6 backdrop-blur-sm">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="font-semibold text-white">${review.name || "Guest"}</p>
+                    <div class="flex items-center gap-1 text-yellow-400">
+                      ${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}
+                    </div>
+                  </div>
+                  ${review.date ? `<p class="text-sm text-slate-400 mb-2">${review.date}</p>` : ''}
+                  <p class="text-slate-300 leading-relaxed">&ldquo;${review.text}&rdquo;</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
         <!-- Booking section (header now separate) -->
         ${bookingSection}
         

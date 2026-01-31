@@ -114,7 +114,7 @@ window.allProperties = [
             "No parties or events — quiet enjoyment only",
             "Check-in: 4:00 PM | Check-out: 10:00 AM",
             "Maximum occupancy: 4 guests (including children)",
-            "No pets allowed (please inquire for exceptions)",
+            "No pets allowed",
             "Quiet hours: 10:00 PM – 8:00 AM",
             "Respect neighbors — no excessive noise",
             "Remove shoes indoors to protect floors",

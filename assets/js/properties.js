@@ -149,21 +149,25 @@ function showGallery() {
     properties.forEach(prop => {
       if (!prop?.slug) return;
       const cover = getCoverImage(prop);
+      const displayTitle = prop.title || prop.slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 
       const block = document.createElement("div");
       block.className = "gallery-block";
       block.innerHTML = `
-        <button type="button" class="gallery-item" data-slug="${prop.slug}" aria-label="View ${prop.title || "property"}">
-          <img 
-            src="${cover}" 
-            alt="${prop.title || "Property"}" 
-            loading="lazy" 
-            decoding="async" 
-            width="400" 
-            height="300" 
-          />
-        </button>
-      `;
+      <button type="button" class="gallery-item" data-slug="${prop.slug}" aria-label="View ${displayTitle}">
+        <img 
+          src="${cover}" 
+          alt="${displayTitle}" 
+          loading="lazy" 
+          decoding="async" 
+          width="400" 
+          height="300" 
+        />
+        <div class="property-name-overlay">
+          ${displayTitle}
+        </div>
+      </button>
+    `;
 
       const img = block.querySelector("img");
 
@@ -194,7 +198,7 @@ function showGallery() {
       galleryGrid.appendChild(block);
     });
 
-    // Click → show selected property detail
+    // Click handler remains unchanged
     galleryGrid.addEventListener("click", e => {
       const btn = e.target.closest("[data-slug]");
       if (!btn) return;
@@ -203,7 +207,6 @@ function showGallery() {
       const prop = properties.find(p => p.slug === slug);
       if (!prop) return;
 
-      // Set param INSIDE hash
       const url = new URL(window.location);
       url.hash = `properties?property=${encodeURIComponent(slug)}`;
       window.history.pushState(null, "", url);

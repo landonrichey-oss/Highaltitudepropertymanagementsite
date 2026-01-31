@@ -121,7 +121,7 @@ window.allProperties = [
             "Remove shoes indoors to protect floors",
             "All guests must sign rental agreement"
         ],
-        location: "Summit County, Utah, United States",
+        location: "1977-2011 W Arapaho Dr, Coalville, UT 84017",
         paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
         securityDeposit: "$300 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
@@ -1659,7 +1659,7 @@ window.allProperties = [
         paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
         securityDeposit: "$500 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
-        featured: true,
+        featured: false,
         overallRating: 4.85,
         reviewCount: 40,
         airbnbUrl: "",

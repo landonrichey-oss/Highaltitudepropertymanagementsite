@@ -9,7 +9,7 @@ window.allProperties = [
         maxGuests: 10,
         checkIn: "4:00 PM",
         checkOut: "10:00 AM",
-        petFriendly: false,
+        petFriendly: true,
         description: [
             "Escape to **Rustic Roots**, a charming mountain getaway perched above Park City with breathtaking views and ultimate tranquility. This inviting 3-bedroom + loft home sleeps 10 comfortably and offers the perfect blend of rustic warmth and modern convenience.",
             "Unwind on two expansive decks with a private hot tub under the stars, gather around the fire pit for s'mores, or challenge friends to arcade games in the loft. Whether you're here for world-class skiing, summer hiking, or simply relaxing in nature, this home delivers the best of mountain living — close to Park City's vibrant dining and shops, yet peacefully secluded."
@@ -42,7 +42,7 @@ window.allProperties = [
             "No parties or events — quiet enjoyment only",
             "Check-in: 4:00 PM | Check-out: 10:00 AM",
             "Maximum occupancy: 10 guests (including children)",
-            "No pets allowed",
+            "Pets allowed (additional fee & rules apply)",
             "Quiet hours: 10:00 PM – 8:00 AM",
             "Respect neighbors — no excessive noise",
             "Remove shoes indoors to protect floors",
@@ -87,7 +87,7 @@ window.allProperties = [
         maxGuests: 4,
         checkIn: "4:00 PM",
         checkOut: "10:00 AM",
-        petFriendly: false,
+        petFriendly: true,
         description: [
             "Step into the modern and bright 2BR 1.5BA cabin in the secluded community in the heart of the scenic Summit County. It promises a relaxing retreat surrounded by dreamy aspen trees, just a short drive away from Park City and local restaurants, shops, exciting attractions, and natural landmarks.",
             "Enjoy open living spaces, a full kitchen, and outdoor relaxation with a private hot tub on the deck—perfect for unwinding after exploring the mountains year-round."
@@ -114,7 +114,7 @@ window.allProperties = [
             "No parties or events — quiet enjoyment only",
             "Check-in: 4:00 PM | Check-out: 10:00 AM",
             "Maximum occupancy: 4 guests (including children)",
-            "No pets allowed",
+            "Pets allowed (additional fee & rules apply)",
             "Quiet hours: 10:00 PM – 8:00 AM",
             "Respect neighbors — no excessive noise",
             "Remove shoes indoors to protect floors",

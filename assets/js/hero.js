@@ -1,5 +1,3 @@
-// assets/js/hero.js
-
 document.addEventListener("DOMContentLoaded", () => {
   const bgElement = document.getElementById("full-hero-bg");
   const heroActions = document.getElementById("hero-actions");
@@ -7,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!bgElement || !heroActions) return;
 
-  const featured = window.allProperties?.filter(p => p.featured === true) || [];
+  const featured = window.allProperties?.filter(p => p?.featured === true && p?.slug) || [];
 
   if (featured.length === 0) {
     bgElement.style.backgroundImage = `url('${window.utils?.FALLBACK_IMG || ''}')`;
@@ -15,36 +13,171 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Preload
+  featured.forEach(prop => {
+    const img = new Image();
+    img.src = window.utils?.getCoverImage(prop) || window.utils?.FALLBACK_IMG || '';
+    img.decoding = "async";
+    img.loading = "eager";
+  });
+
+  // Second layer
+  let bgLayer1 = bgElement;
+  let bgLayer2 = document.getElementById("full-hero-bg-layer2");
+
+  if (!bgLayer2) {
+    bgLayer2 = document.createElement("div");
+    bgLayer2.id = "full-hero-bg-layer2";
+    bgLayer2.style.cssText = `
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 1.6s ease-in-out;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    `;
+    bgElement.parentNode.insertBefore(bgLayer2, bgElement.nextSibling);
+  }
+
+  const parent = bgElement.parentNode;
+  parent.style.position = "relative";
+  parent.style.overflow = "hidden";
+
   let currentIndex = 0;
-  let interval;
+  let timeoutId = null;
+  let activeLayer = bgLayer1;
+  let inactiveLayer = bgLayer2;
 
-  function updateHero() {
-    const prop = featured[currentIndex];
-
-    bgElement.style.backgroundImage = `url('${window.utils?.getCoverImage(prop) || ''}')`;
-    bgElement.classList.add("active");
-
+  // Buttons
+  let bookNowBtn;
+  function initButtons() {
+    if (bookNowBtn) return;
     heroActions.innerHTML = `
-      <a class="btn" href="#properties?property=${prop.slug}">Book Now</a>
+      <a id="book-now-btn" class="btn" href="#properties">Book Now</a>
       <a class="btn btn-ghost" href="#properties">Explore</a>
     `;
+    bookNowBtn = document.getElementById("book-now-btn");
+  }
+  initButtons();
+
+  function setImage(layer, url) {
+    layer.style.backgroundImage = `url('${url || window.utils?.FALLBACK_IMG || ''}')`;
+  }
+
+  function performCrossfade() {
+    const prop = featured[currentIndex];
+    if (!prop) return;
+
+    const nextUrl = window.utils?.getCoverImage(prop) || '';
+
+    setImage(inactiveLayer, nextUrl);
+    inactiveLayer.style.opacity = "1";
+    activeLayer.style.opacity = "0";
+
+    const handleTransitionEnd = () => {
+      [activeLayer, inactiveLayer] = [inactiveLayer, activeLayer];
+      inactiveLayer.style.opacity = "0";
+      activeLayer.removeEventListener("transitionend", handleTransitionEnd);
+    };
+
+    activeLayer.addEventListener("transitionend", handleTransitionEnd, { once: true });
+
+    if (bookNowBtn) {
+      bookNowBtn.href = `#properties?property=${encodeURIComponent(prop.slug)}`;
+    }
 
     currentIndex = (currentIndex + 1) % featured.length;
   }
 
-  updateHero();
-
-  interval = setInterval(updateHero, 3000);
-
-  // Reveal footer after scrolling past hero (approx 80vh)
-  window.addEventListener("scroll", () => {
-    const scrolledPastHero = window.scrollY > window.innerHeight * 0.8;
-    footer?.classList.toggle("visible", scrolledPastHero);
-  });
-
-  // Initial check
-  if (window.scrollY > window.innerHeight * 0.8) {
-    footer?.classList.add("visible");
+  function scheduleNextAttempt() {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => tryAdvance(), 5000);
   }
 
+  function tryAdvance() {
+    const nextIndex = (currentIndex + 1) % featured.length;
+    const nextProp = featured[nextIndex];
+    if (!nextProp) {
+      scheduleNextAttempt();
+      return;
+    }
+
+    const nextUrl = window.utils?.getCoverImage(nextProp) || '';
+
+    const testImg = new Image();
+    testImg.src = nextUrl;
+
+    const isReady = testImg.complete && testImg.naturalWidth !== 0;
+
+    if (isReady) {
+      performCrossfade();
+      scheduleNextAttempt();
+    } else {
+      testImg.onload = () => {
+        performCrossfade();
+        scheduleNextAttempt();
+      };
+      testImg.onerror = () => {
+        console.warn("Failed to load hero image:", nextUrl);
+        currentIndex = nextIndex;
+        scheduleNextAttempt();
+      };
+    }
+  }
+
+  // Initial
+  setImage(bgLayer1, window.utils?.getCoverImage(featured[0]) || '');
+  bgLayer1.style.opacity = "1";
+  bgLayer1.classList.add("active");
+
+  if (bookNowBtn) {
+    bookNowBtn.href = `#properties?property=${encodeURIComponent(featured[0].slug)}`;
+  }
+
+  setTimeout(() => {
+    tryAdvance();
+  }, 1200);
+
+  // Visibility handling (unchanged)
+  const heroSection = document.querySelector("#home") || bgElement.closest(".section") || parent;
+
+  const visibilityObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        if (!timeoutId) scheduleNextAttempt();
+      } else {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    },
+    { threshold: 0.4 }
+  );
+
+  if (heroSection) visibilityObserver.observe(heroSection);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    } else if (heroSection && heroSection.getBoundingClientRect().top < window.innerHeight) {
+      scheduleNextAttempt();
+    }
+  });
+
+  // Footer
+  const onScroll = () => {
+    const pastHero = window.scrollY > window.innerHeight * 0.75;
+    footer?.classList.toggle("visible", pastHero);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Cleanup
+  window.addEventListener("beforeunload", () => {
+    clearTimeout(timeoutId);
+    visibilityObserver.disconnect();
+  });
 });

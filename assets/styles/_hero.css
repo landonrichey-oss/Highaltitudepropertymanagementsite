@@ -1,26 +1,45 @@
-/* Full-page featured background */
-#full-hero-bg {
+/* Full-page featured background – container setup */
+.hero-bg-container,
+section#home,
+body:has(#full-hero-bg) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* New stacking context – prevents z-index bleed */
+}
+
+/* Common base for both background layers */
+#full-hero-bg,
+#full-hero-bg-layer2 {
   position: fixed;
   inset: 0;
   z-index: -2;
+  /* Both layers below content */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: background-image 1.5s ease;
+  transition: opacity 1.8s ease-in-out;
+  /* Core smooth crossfade duration */
+  will-change: opacity;
+  /* Promote to compositor layer – perf boost */
+  pointer-events: none;
+}
+
+/* Layer 1 – primary / initial */
+#full-hero-bg {
   opacity: 0;
-  display: none;
 }
 
-#full-hero-bg.active {
-  display: block;
-  opacity: 1;
+/* Layer 2 – secondary / incoming (starts hidden) */
+#full-hero-bg-layer2 {
+  opacity: 0;
 }
 
-/* Hero content */
+/* Hero content – unchanged */
 .hero-content {
   position: relative;
   z-index: 2;
-  min-height: calc(100vh - 80px); 
+  min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,23 +55,23 @@
 
 .hero-brand {
   font-size: clamp(3rem, 10vw, 5rem);
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.7));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
 }
 
 .hero-brand .brand-text strong {
   font-size: clamp(2rem, 6vw, 3.2rem);
   font-weight: 900;
   letter-spacing: -1px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 .hero-brand .brand-text small {
   font-size: clamp(1.1rem, 3vw, 1.5rem);
   opacity: 0.9;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Bottom center buttons – fixed visibility */
+/* Bottom center buttons – unchanged */
 .hero-actions {
   display: flex;
   justify-content: center;
@@ -66,11 +85,21 @@
   padding: 16px 32px;
   font-size: 1.1rem;
   font-weight: 700;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
 
 .hero-actions .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+
+  #full-hero-bg,
+  #full-hero-bg-layer2 {
+    transition-duration: 1.4s;
+    /* Slightly faster on mobile */
+  }
 }

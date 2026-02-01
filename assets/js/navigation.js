@@ -105,25 +105,28 @@ document.addEventListener("DOMContentLoaded", () => {
     let section = "home";
     let property = null;
 
-    // Prefer hash first (your current pattern)
+    // 1. Real query string (people sometimes share without hash)
+    if (url.searchParams.has("property")) {
+      property = url.searchParams.get("property");
+      section = "properties";
+    }
+
+    // 2. Hash – primary method
     if (url.hash) {
       const hashContent = url.hash.substring(1);
       const parts = hashContent.split("?");
-      section = parts[0] || "home";
+      const hashSection = parts[0] || "home";
+      section = hashSection || section; // hash section wins if present
+
       if (parts[1]) {
         const hashParams = new URLSearchParams(parts[1]);
-        property = hashParams.get("property");
+        property = property || hashParams.get("property"); // hash param wins if both exist
       }
     }
 
-    // Fallback: check real query string (?property=...)
-    if (!property && url.searchParams.has("property")) {
-      property = url.searchParams.get("property");
-      // If only query param and no hash → assume properties section
-      if (section === "home") section = "properties";
-    }
-
-    if (section === "") section = "home";
+    // 3. Final clean-up
+    if (!section || section === "") section = "home";
+    if (property) property = decodeURIComponent(property);
 
     return { section, property };
   }
@@ -148,10 +151,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Initial load: determine section + property from URL
-  const { section: initialSection, property: initialProperty } = getCurrentSectionAndProperty();
-
-  showSection(initialSection, initialProperty);
-
+  setTimeout(() => {
+    const { section, property } = getCurrentSectionAndProperty();
+    showSection(section, property);
+  }, 0);
+  
   // Browser back/forward (popstate is better than hashchange for full control)
   window.addEventListener("popstate", () => {
     const { section, property } = getCurrentSectionAndProperty();

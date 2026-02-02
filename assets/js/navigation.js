@@ -51,10 +51,17 @@ document.addEventListener("DOMContentLoaded", () => {
       heroOverlay.style.display = (sectionId === "home") ? "block" : "none";
     }
 
-    // 3. Toggle full hero background (only on home)
-    if (fullHeroBg) {
-      fullHeroBg.style.display = (sectionId === "home") ? "block" : "none";
-    }
+    // 3. Toggle BOTH full hero background layers (only on home)
+    const heroLayers = [
+      document.getElementById("full-hero-bg"),
+      document.getElementById("full-hero-bg-layer2")
+    ];
+
+    heroLayers.forEach(layer => {
+      if (layer) {
+        layer.style.display = (sectionId === "home") ? "block" : "none";
+      }
+    });
 
     // 4. Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -84,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Tell properties.js to reset view
         if (typeof window.showPropertyDetail === "function") {
-          // Passing null intentionally triggers gallery state
           window.showPropertyDetail(null);
         }
 
@@ -96,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.showPropertyDetail(propertySlug);
       }
     }
-
   }
 
   // Helper: parse section + property from current URL (hash or search)

@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const parent = bgElement.parentNode;
   parent.style.position = "relative";
-  parent.style.overflow = "hidden";
 
   let currentIndex = 0;
   let timeoutId = null;
@@ -127,7 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Initial
+  // ── Force scroll to top when starting the carousel ───────────────────────
+  // This runs early, right after initial setup, to guarantee top position
+  window.scrollTo({ top: 0, behavior: "instant" });
+  // Optional extra safety (some browsers ignore instant on load)
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 0);
+
+  // Initial image setup
   setImage(bgLayer1, window.utils?.getCoverImage(featured[0]) || '');
   bgLayer1.style.opacity = "1";
   bgLayer1.classList.add("active");
@@ -166,14 +173,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Footer
+  // Footer – only visible after scrolling down
   const onScroll = () => {
     const pastHero = window.scrollY > window.innerHeight * 0.75;
     footer?.classList.toggle("visible", pastHero);
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  onScroll(); // initial check
 
   // Cleanup
   window.addEventListener("beforeunload", () => {

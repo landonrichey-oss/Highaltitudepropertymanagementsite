@@ -3,7 +3,6 @@
 section#home,
 body:has(#full-hero-bg) {
   position: relative;
-  overflow: hidden;
   isolation: isolate;
   /* New stacking context – prevents z-index bleed */
 }

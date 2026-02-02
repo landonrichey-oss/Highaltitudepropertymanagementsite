@@ -26,10 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Back to top
-  document.getElementById("back-to-top")?.addEventListener("click", e => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  const backToTop = document.getElementById("back-to-top");
+  if (backToTop) {
+    backToTop.addEventListener("click", e => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  } else {
+    console.warn("Back-to-top button not found in DOM");
+  }
 
   // Set current year in footer
   document.getElementById("year")?.replaceChildren(String(new Date().getFullYear()));
@@ -40,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (sec.id === sectionId) {
         sec.classList.add("active-section");
         sec.style.display = "flex";
+        sec.style.minHeight = "100vh"; // ensure scrollable height
       } else {
         sec.classList.remove("active-section");
         sec.style.display = "none";
@@ -51,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       heroOverlay.style.display = (sectionId === "home") ? "block" : "none";
     }
 
-    // 3. Toggle BOTH full hero background layers (only on home)
+    // 3. Toggle BOTH hero background layers
     const heroLayers = [
       document.getElementById("full-hero-bg"),
       document.getElementById("full-hero-bg-layer2")
@@ -63,10 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // 4. Scroll to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // 4. Control page/body overflow for scrolling
+    if (sectionId === "home") {
+      //document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
 
-    // 5. Update active nav link
+    // 5. Force scroll to top (especially reliable when returning to home)
+    window.scrollTo(0, 0); // instant hard reset (works even when smooth is ignored)
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 10); // smooth follow-up in next microtask
+
+    // 6. Update active nav link
     document.querySelectorAll(".nav-link").forEach(el => {
       el.classList.remove("active");
     });
@@ -77,19 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(`.nav-link[data-section="${sectionId}"]`)?.classList.add("active");
     }
 
-    // 6. Properties-specific logic
+    // 7. Properties-specific logic (unchanged)
     if (sectionId === "properties") {
       const url = new URL(window.location);
 
-      // If NO property slug → force gallery + clear active state
       if (!propertySlug) {
-        // Clear query param if present
         if (url.searchParams.has("property")) {
           url.searchParams.delete("property");
           window.history.replaceState(null, "", url);
         }
 
-        // Tell properties.js to reset view
         if (typeof window.showPropertyDetail === "function") {
           window.showPropertyDetail(null);
         }
@@ -97,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // If we DO have a property slug → open detail
       if (typeof window.showPropertyDetail === "function") {
         window.showPropertyDetail(propertySlug);
       }

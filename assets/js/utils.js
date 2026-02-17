@@ -65,8 +65,13 @@ function getCoverImage(prop) {
  */
 function getShareUrlForSlug(slug) {
   const u = new URL(window.location.href);
-  u.hash = "properties";
-  u.searchParams.set("property", slug);
+
+  // Put both section AND parameter inside the hash — this matches your parser's primary logic
+  u.hash = `properties?property=${encodeURIComponent(slug)}`;
+
+  // Optional: clear any real query string to keep URL clean
+  u.search = '';
+
   return u.toString();
 }
 

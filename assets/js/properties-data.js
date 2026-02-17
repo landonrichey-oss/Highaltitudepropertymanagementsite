@@ -338,7 +338,7 @@ window.allProperties = [
             "Remove shoes indoors to protect floors",
             "All guests must sign rental agreement"
         ],
-        location: "https://maps.app.goo.gl/Q7wHM2JTBvFtEpe67",
+        location: "1123-1087 W Cattail Ct, Francis, UT 84036",
         paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
         securityDeposit: "$400 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",

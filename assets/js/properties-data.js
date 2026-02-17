@@ -338,12 +338,12 @@ window.allProperties = [
             "Remove shoes indoors to protect floors",
             "All guests must sign rental agreement"
         ],
-        location: "1977-2011 W Arapaho Dr, Coalville, UT 84017",
+        location: "https://maps.app.goo.gl/Q7wHM2JTBvFtEpe67",
         paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
         securityDeposit: "$400 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
         cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
         featured: true,
-        overallRating: 4.85,
+        overallRating: 4.95,
         reviewCount: 37,
         airbnbUrl: "",
         reviews: []

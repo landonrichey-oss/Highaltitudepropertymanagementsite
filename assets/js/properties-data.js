@@ -140,7 +140,7 @@ window.allProperties = [
         maxGuests: 14,
         checkIn: "4:00 PM",
         checkOut: "10:00 AM",
-        petFriendly: true,
+        petFriendly: false,
         description: [
             "Escape to Fortunovi Less than 15 miles from Park City and Deer Valley this newly renovated luxury mountain home blends Scandinavian‑European inspired design panoramic canyon views, and thoughtful spaces for both togetherness and privacy. ",
             "Whether you’re here for skiing, snowboarding, hiking or a peaceful mountain escape Fortunovi offers the perfect balance of adventure and relaxation."

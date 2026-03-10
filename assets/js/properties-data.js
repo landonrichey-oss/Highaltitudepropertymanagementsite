@@ -131,6 +131,64 @@ window.allProperties = [
         reviews: []
     },
     {
+        slug: "Fortunovi",
+        title: "Fortunovi",
+        subtitle: "Mountain Retreat • Sleeps 10 • 3 Bedrooms + Loft • 3 Bathrooms",
+        sleeps: 14,
+        bedrooms: 5,
+        bathrooms: 3.5,
+        maxGuests: 14,
+        checkIn: "4:00 PM",
+        checkOut: "10:00 AM",
+        petFriendly: true,
+        description: [
+            "Escape to Fortunovi Less than 15 miles from Park City and Deer Valley this newly renovated luxury mountain home blends Scandinavian‑European inspired design panoramic canyon views, and thoughtful spaces for both togetherness and privacy. ",
+            "Whether you’re here for skiing, snowboarding, hiking or a peaceful mountain escape Fortunovi offers the perfect balance of adventure and relaxation."
+        ].join("\n\n"),
+        highlights: [
+            "Private hot tub with mountain views",
+            "Game room and game table",
+            "Sauna, Cold plunge, and Hot Tub",
+            "Full kitchen & smart TV",
+            "High-speed Wi-Fi & laundry",
+            "Tranquil location near Park City"
+        ],
+        amenities: [
+            "Private hot tub",
+            "Cold Plunge",
+            "Sauna",
+            "Spacious deck",
+            "Game room with game table",
+            "Full kitchen with modern appliances",
+            "Smart TV with streaming",
+            "High-speed Wi-Fi",
+            "Washer & dryer",
+            "Stone fireplace (seasonal)",
+            "Ample parking",
+            "Mountain views"
+        ],
+        rules: [
+            "No smoking indoors or on decks",
+            "No parties or events — quiet enjoyment only",
+            "Check-in: 4:00 PM | Check-out: 10:00 AM",
+            "Maximum occupancy: 14 guests (including children)",
+            "No pets allowed",
+            "Quiet hours: 10:00 PM – 8:00 AM",
+            "Respect neighbors — no excessive noise",
+            "Remove shoes indoors to protect floors",
+            "All guests must sign rental agreement"
+        ],
+        location: "1977-2011 W Arapaho Dr, Coalville, UT 84017",
+        paymentSchedule: "100% due at time of reservation. Final balance automatically charged 30 days prior to arrival.",
+        securityDeposit: "$500 refundable security deposit required (held on card, returned within 7 days post-stay if no damages).",
+        cancellationPolicy: "50% refund if canceled 14+ days before arrival. No refund for cancellations within 14 days. Travel insurance recommended.",
+        featured: true,
+        overallRating: 5.0,
+        reviewCount: 10,
+        airbnbUrl: "",
+        reviews: []
+    },
+    {
         slug: "whisperingpinesaboveparkcity",
         title: "Whispering Pines",
         subtitle: "Sleeps 4 • 2 beds • 1 bath",

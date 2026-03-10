@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Rustic-Roots": 720956,
     "Bright-Mountain-Retreat": 609125,
     "whisperingpinesaboveparkcity": 720955,
+    "Fortunovi":760563,
     "bearnecessitiesparkcity": 609126,
     "sunflowerlodgeparkcity": 568064,
     "wasatachfamilyretreat": 742776,
